@@ -4,39 +4,20 @@ from re import T
 
 class PAM:
 
-    # -----------------------------------------------------------------------------------------------------------------------------
-    # Initialize
-    # -----------------------------------------------------------------------------------------------------------------------------
     def __init__(self, config):
         self.config = config
         self.printer = self.config.get_printer()
         self.gcode = self.printer.lookup_object('gcode')
         self.bed_mesh = self.printer.lookup_object('bed_mesh')
-
-        self.load_settings()
-        self.register_commands()
-        self.register_handle_connect()
-
-    def register_handle_connect(self):
+        self.offset = self.config.getfloat('offset', 0.)
+        self.gcode.register_command('PAM', self.cmd_PAM, desc=("PAM"))
+        self.gcode.register_command('MESH_CONFIG', self.cmd_MESH_CONFIG, desc=("MESH_CONFIG"))
         self.printer.register_event_handler("klippy:connect", self.execute_handle_connect)
 
     def execute_handle_connect(self):
         self.toolhead = self.printer.lookup_object('toolhead')
         self.probe_x_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][0] - self.bed_mesh.bmc.orig_config['mesh_min'][0]) / self.bed_mesh.bmc.orig_config['x_count'])
         self.probe_y_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][1] - self.bed_mesh.bmc.orig_config['mesh_min'][1]) / self.bed_mesh.bmc.orig_config['y_count'])
-
-    # -----------------------------------------------------------------------------------------------------------------------------
-    # Settings
-    # -----------------------------------------------------------------------------------------------------------------------------
-    def load_settings(self):
-        self.offset = self.config.getfloat('offset', 0.)
-
-    # -----------------------------------------------------------------------------------------------------------------------------
-    # GCode Registration
-    # -----------------------------------------------------------------------------------------------------------------------------
-    def register_commands(self):
-        self.gcode.register_command('PAM', self.cmd_PAM, desc=("PAM"))
-        self.gcode.register_command('MESH_CONFIG', self.cmd_MESH_CONFIG, desc=("MESH_CONFIG"))
 
     def cmd_MESH_CONFIG(self, param):
         self.x0 = param.get_float('X0', None, minval=self.toolhead.kin.axes_min.x, maxval=self.toolhead.kin.axes_max.x) 
