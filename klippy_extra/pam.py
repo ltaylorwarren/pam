@@ -10,7 +10,6 @@ class PAM:
     def __init__(self, config):
         self.config = config
         self.printer = self.config.get_printer()
-        self.reactor = self.printer.get_reactor()
         self.gcode = self.printer.lookup_object('gcode')
         self.bed_mesh = self.printer.lookup_object('bed_mesh')
 
@@ -23,12 +22,6 @@ class PAM:
 
     def execute_handle_connect(self):
         self.toolhead = self.printer.lookup_object('toolhead')
-
-        self.x0 = self.bed_mesh.bmc.orig_config['mesh_min'][0]
-        self.y0 = self.bed_mesh.bmc.orig_config['mesh_min'][1]
-        self.x1 = self.bed_mesh.bmc.orig_config['mesh_max'][0]
-        self.y1 = self.bed_mesh.bmc.orig_config['mesh_max'][1]
-
         self.probe_x_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][0] - self.bed_mesh.bmc.orig_config['mesh_min'][0]) / self.bed_mesh.bmc.orig_config['x_count'])
         self.probe_y_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][1] - self.bed_mesh.bmc.orig_config['mesh_min'][1]) / self.bed_mesh.bmc.orig_config['y_count'])
 
@@ -54,26 +47,15 @@ class PAM:
     def cmd_PAM(self, param):
         if self.x0 >= self.x1 or self.y0 >= self.y1:
             self.gcode.respond_raw("Wrong first layer coordinates, using default mesh area!")
-            self.mesh()
+            self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos')
             return
-
         mesh_x0 = max(self.x0 - self.offset, self.bed_mesh.bmc.orig_config['mesh_min'][0])
         mesh_y0 = max(self.y0 - self.offset, self.bed_mesh.bmc.orig_config['mesh_min'][1])
         mesh_x1 = min(self.x1 + self.offset, self.bed_mesh.bmc.orig_config['mesh_max'][0])
         mesh_y1 = min(self.y1 + self.offset, self.bed_mesh.bmc.orig_config['mesh_max'][1])
         mesh_cx = max(3, int((mesh_x1 - mesh_x0) / self.probe_x_step))
         mesh_cy = max(3, int((mesh_y1 - mesh_y0) / self.probe_y_step))
-
-        self.area_mesh([mesh_x0, mesh_y0], [mesh_x1, mesh_y1], [mesh_cx, mesh_cy])
-
-    # -----------------------------------------------------------------------------------------------------------------------------
-    # Mesh
-    # -----------------------------------------------------------------------------------------------------------------------------
-    def mesh(self):
-        self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos')
-
-    def area_mesh(self, mesh_min, mesh_max, probe_count):
-        self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos mesh_min={0},{1} mesh_max={2},{3} probe_count={4},{5}'.format(mesh_min[0], mesh_min[1], mesh_max[0], mesh_max[1], probe_count[0], probe_count[1]))
+        self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos mesh_min={0},{1} mesh_max={2},{3} probe_count={4},{5}'.format(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy))
 
 def load_config(config):
     return PAM(config)
