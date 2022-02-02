@@ -1,7 +1,3 @@
-import time
-from math import fabs
-from re import T
-
 class PAM:
 
     def __init__(self, config):
