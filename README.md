@@ -1,7 +1,7 @@
 # PAM for RatOS
 Print area mesh for RatOS
 
-Adds dynaminc mesh calibration to your RatOS printer.
+Adds dynamic mesh calibration to your RatOS printer.
 
 # Installation
 
