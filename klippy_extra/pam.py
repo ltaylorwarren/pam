@@ -23,7 +23,6 @@ class PAM:
 
     def cmd_PAM(self, param):
         if self.x0 >= self.x1 or self.y0 >= self.y1:
-            self.gcode.respond_raw("Wrong first layer coordinates, using default mesh area!")
             self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos')
             return
         mesh_x0 = max(self.x0 - self.offset, self.bed_mesh.bmc.orig_config['mesh_min'][0])
