@@ -12,9 +12,9 @@ class PAM:
         self.offset = self.config.getfloat('offset', 0.)
         self.gcode.register_command('PAM', self.cmd_PAM, desc=("PAM"))
         self.gcode.register_command('MESH_CONFIG', self.cmd_MESH_CONFIG, desc=("MESH_CONFIG"))
-        self.printer.register_event_handler("klippy:connect", self.execute_handle_connect)
+        self.printer.register_event_handler("klippy:connect", self.handle_connect)
 
-    def execute_handle_connect(self):
+    def handle_connect(self):
         self.toolhead = self.printer.lookup_object('toolhead')
         self.probe_x_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][0] - self.bed_mesh.bmc.orig_config['mesh_min'][0]) / self.bed_mesh.bmc.orig_config['x_count'])
         self.probe_y_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][1] - self.bed_mesh.bmc.orig_config['mesh_min'][1]) / self.bed_mesh.bmc.orig_config['y_count'])
