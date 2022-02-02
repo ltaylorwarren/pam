@@ -24,10 +24,10 @@ class PAM:
     def execute_handle_connect(self):
         self.toolhead = self.printer.lookup_object('toolhead')
 
-        self.x0 = self.toolhead.kin.axes_min.x
-        self.y0 = self.toolhead.kin.axes_min.y
-        self.x1 = self.toolhead.kin.axes_max.x
-        self.y1 = self.toolhead.kin.axes_max.y
+        self.x0 = self.bed_mesh.bmc.orig_config['mesh_min'][0]
+        self.y0 = self.bed_mesh.bmc.orig_config['mesh_min'][1]
+        self.x1 = self.bed_mesh.bmc.orig_config['mesh_max'][0]
+        self.y1 = self.bed_mesh.bmc.orig_config['mesh_max'][1]
 
         self.probe_x_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][0] - self.bed_mesh.bmc.orig_config['mesh_min'][0]) / self.bed_mesh.bmc.orig_config['x_count'])
         self.probe_y_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][1] - self.bed_mesh.bmc.orig_config['mesh_min'][1]) / self.bed_mesh.bmc.orig_config['y_count'])
