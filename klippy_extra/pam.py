@@ -29,8 +29,8 @@ class PAM:
         self.x1 = self.toolhead.kin.axes_max.x
         self.y1 = self.toolhead.kin.axes_max.y
 
-        self.probe_x_step = float((self.self.bed_mesh.bmc.orig_config['mesh_max'][0] - self.self.bed_mesh.bmc.orig_config['mesh_min'][0]) / self.bed_mesh.bmc.orig_config['x_count'])
-        self.probe_y_step = float((self.self.bed_mesh.bmc.orig_config['mesh_max'][1] - self.self.bed_mesh.bmc.orig_config['mesh_min'][1]) / self.bed_mesh.bmc.orig_config['y_count'])
+        self.probe_x_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][0] - self.bed_mesh.bmc.orig_config['mesh_min'][0]) / self.bed_mesh.bmc.orig_config['x_count'])
+        self.probe_y_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][1] - self.bed_mesh.bmc.orig_config['mesh_min'][1]) / self.bed_mesh.bmc.orig_config['y_count'])
 
     # -----------------------------------------------------------------------------------------------------------------------------
     # Settings
@@ -57,10 +57,10 @@ class PAM:
             self.mesh()
             return
 
-        mesh_x0 = max(self.x0 - self.offset, self.self.bed_mesh.bmc.orig_config['mesh_min'][0])
-        mesh_y0 = max(self.y0 - self.offset, self.self.bed_mesh.bmc.orig_config['mesh_min'][1])
-        mesh_x1 = min(self.x1 + self.offset, self.self.bed_mesh.bmc.orig_config['mesh_max'][0])
-        mesh_y1 = min(self.y1 + self.offset, self.self.bed_mesh.bmc.orig_config['mesh_max'][1])
+        mesh_x0 = max(self.x0 - self.offset, self.bed_mesh.bmc.orig_config['mesh_min'][0])
+        mesh_y0 = max(self.y0 - self.offset, self.bed_mesh.bmc.orig_config['mesh_min'][1])
+        mesh_x1 = min(self.x1 + self.offset, self.bed_mesh.bmc.orig_config['mesh_max'][0])
+        mesh_y1 = min(self.y1 + self.offset, self.bed_mesh.bmc.orig_config['mesh_max'][1])
         mesh_cx = max(3, int((mesh_x1 - mesh_x0) / self.probe_x_step))
         mesh_cy = max(3, int((mesh_y1 - mesh_y0) / self.probe_y_step))
 
