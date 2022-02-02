@@ -41,9 +41,10 @@ is_system_service: False
 
 # optional configuration
 [pam]
-offset: 10          ; clearance between print area and mesh area in mm, default = 0. 
-                    ; positive value = mesh area will be bigger then the print area
-                    ; negative value = mesh area will be smaller then the print area
+# clearance between print area and mesh area in mm, default = 0. 
+# positive value = mesh area will be bigger then the print area
+# negative value = mesh area will be smaller then the print area
+offset: 10          
 ```
 
 ## Modify your printer's start g-code in your slicer
