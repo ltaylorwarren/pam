@@ -54,8 +54,3 @@ Make sure this is the first line in your Start Gcode section.
 ```ini
 MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
 ```
-
-- Cura
-```ini
-MESH_CONFIG X0=%MINX% Y0=%MINY% X1=%MAXX% Y1=%MAXY%
-```
