@@ -1,24 +1,26 @@
-# RatOS print area bed mesh leveling
-based on: https://github.com/Turge08/print_area_bed_mesh
+# PAM for RatOS
+Print area mesh for RatOS
+
+Adds dynaminc mesh calibration to your RatOS printer.
 
 # Installation
 
 ## On your Raspberry
 ```
 cd ~/
-git clone https://github.com/HelgeKeck/print_area_mesh.git
-bash ~/print_area_mesh/install.sh
+git clone https://github.com/HelgeKeck/pam.git
+bash ~/pam/install.sh
 ```
 
 ## Configure Moonraker update manager (optional)
 ```ini
 # moonraker.conf
 
-[update_manager print_area_mesh]
+[update_manager pam]
 type: git_repo
 primary_branch: main
-path: ~/print_area_mesh
-origin: https://github.com/HelgeKeck/print_area_mesh.git
+path: ~/pam
+origin: https://github.com/HelgeKeck/pam.git
 is_system_service: False
 ```
 
@@ -26,12 +28,11 @@ is_system_service: False
 ```ini
 # printer.cfg
 
-[include print_area_mesh/print_area_mesh.cfg]
-
+[include pam/pam.cfg]
 ```
 
 ## Modify your printer's start g-code in your slicer
-Make sure this is the first line in your Start Gcode section
+Make sure this is the first line in your Start Gcode section.
 
 - PrusaSlicer / SuperSlicer
 ```ini
