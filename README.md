@@ -3,6 +3,15 @@ Print area mesh for RatOS
 
 Adds dynamic mesh calibration to your RatOS printer.
 
+# Features
+- Works out of the box with any printer running RatOS
+- respects all settings made in RatOS
+- No configuration required
+- No macro changes required
+- Probe agnostic
+- Independent probe count for x and y direction based on the mesh configuration
+
+
 # Installation
 
 ## On your Raspberry
