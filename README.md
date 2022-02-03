@@ -1,6 +1,11 @@
-# PAM for RatOS
+ ___  ___  __  __
+| _ \/   \|  \/  |
+|  _/| - || |\/| |
+|_|  |_|_||_|  |_|
+   
 Print Area Mesh for RatOS
 
+# PAM for RatOS
 Adds dynamic mesh calibration to your RatOS printer.
 
 # Features
