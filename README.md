@@ -12,9 +12,7 @@ Adds dynamic mesh calibration to your RatOS printer.
 - Independent probe count for x and y direction based on the mesh configuration
 
 
-# Installation
-
-## Install
+# Install
 SSH into your raspberry PI and execute these commands.
 ```
 cd ~/
@@ -22,14 +20,14 @@ git clone https://github.com/HelgeKeck/pam.git
 bash ~/pam/install.sh
 ```
 
-## Activate
+# Activate
 Add this to the overwrite section at the end of your printer.cfg file.
 ```ini
 # PAM
 [include pam/pam.cfg]
 ```
 
-## Configure
+# Configure
 This is optional, if you use it, put it after your PAM activation/include.
 ```ini
 [pam]
@@ -39,7 +37,7 @@ This is optional, if you use it, put it after your PAM activation/include.
 offset: 10          
 ```
 
-## Update
+# Update
 If you want to receive updates for PAM put this at the end of the moonraker.conf file.
 ```ini
 # PAM
@@ -51,7 +49,7 @@ origin: https://github.com/HelgeKeck/pam.git
 is_system_service: False
 ```
 
-## Modify your printer's start g-code in your slicer
+# Modify your printer's start g-code in your slicer
 Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
 
 Make sure this is the first line in your Start Gcode section.
