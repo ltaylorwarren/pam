@@ -27,15 +27,7 @@ Add this to the overwrite section at the end of your printer.cfg file.
 [include pam/pam.cfg]
 ```
 
-# Configure your Slicer
-Make sure this is the first line in your Start Gcode section.
-Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
-- PrusaSlicer / SuperSlicer
-```ini
-MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
-```
-
-# Configure
+# Configure PAM
 This is optional, if you use it, put it after your PAM activation/include.
 ```ini
 [pam]
@@ -43,6 +35,14 @@ This is optional, if you use it, put it after your PAM activation/include.
 # positive value = mesh area will be bigger then the print area
 # negative value = mesh area will be smaller then the print area
 offset: 10          
+```
+
+# Configure your Slicer
+Make sure this is the first line in your Start Gcode section.
+Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
+- PrusaSlicer / SuperSlicer
+```ini
+MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
 ```
 
 # Update
