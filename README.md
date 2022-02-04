@@ -21,18 +21,6 @@ git clone https://github.com/HelgeKeck/pam.git
 bash ~/pam/install.sh
 ```
 
-## Configure Moonraker update manager
-You dont need to, but if you want to receive updates for PAM put this at the end of the moonraker.conf file.
-```ini
-# PAM
-[update_manager pam]
-type: git_repo
-primary_branch: main
-path: ~/pam
-origin: https://github.com/HelgeKeck/pam.git
-is_system_service: False
-```
-
 ## Activate PAM
 Make sure you add this to the overwrite section at the end of your printer.cfg file.
 ```ini
@@ -48,6 +36,18 @@ This is not needed to use PAM, its entirely optional. If you use it, put it afte
 # positive value = mesh area will be bigger then the print area
 # negative value = mesh area will be smaller then the print area
 offset: 10          
+```
+
+## Stay up to date
+You dont need to, but if you want to receive updates for PAM put this at the end of the moonraker.conf file.
+```ini
+# PAM
+[update_manager pam]
+type: git_repo
+primary_branch: main
+path: ~/pam
+origin: https://github.com/HelgeKeck/pam.git
+is_system_service: False
 ```
 
 ## Modify your printer's start g-code in your slicer
