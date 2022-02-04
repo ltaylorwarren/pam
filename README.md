@@ -27,6 +27,14 @@ Add this to the overwrite section at the end of your printer.cfg file.
 [include pam/pam.cfg]
 ```
 
+# Configure your Slicer
+Make sure this is the first line in your Start Gcode section.
+Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
+- PrusaSlicer / SuperSlicer
+```ini
+MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
+```
+
 # Configure
 This is optional, if you use it, put it after your PAM activation/include.
 ```ini
@@ -47,13 +55,4 @@ primary_branch: main
 path: ~/pam
 origin: https://github.com/HelgeKeck/pam.git
 is_system_service: False
-```
-
-# Modify your printer's start g-code in your slicer
-Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
-
-Make sure this is the first line in your Start Gcode section.
-- PrusaSlicer / SuperSlicer
-```ini
-MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
 ```
