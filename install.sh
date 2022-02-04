@@ -103,6 +103,10 @@ echo -e ""
 echo -e "Add this line to the overrides section in your printer.cfg"
 echo -e "[include pam/pam.cfg]"
 echo -e ""
+echo -e "PAM recommends to use minimum SuperSlicer Verrsion 2.3.57.10!"
+echo -e ""
+echo -e "Happy meshing!"
+echo -e ""
 
 # If something checks status of install
 exit 0
