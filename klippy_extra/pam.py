@@ -22,15 +22,6 @@ class PAM:
         self.y1 = param.get_float('Y1', None, -1000, maxval=1000)
         if self.x0 < 0 or self.y0 < 0:
             self.gcode.respond_raw("Wrong first layer coordinates, please update to minimum SuperSlicer Version 2.3.57.10!")
-            self.x0 = self.toolhead.kin.axes_min.x
-            self.y0 = self.toolhead.kin.axes_min.y
-            self.x1 = self.toolhead.kin.axes_max.x
-            self.y1 = self.toolhead.kin.axes_max.y
-            return
-        self.x0 = max(self.x0, self.toolhead.kin.axes_min.x) 
-        self.y0 = max(self.y0, self.toolhead.kin.axes_min.y)
-        self.x1 = min(self.x1, self.toolhead.kin.axes_max.x)
-        self.y1 = min(self.y1, self.toolhead.kin.axes_max.y)
 
     def cmd_PAM(self, param):
         if self.x0 >= self.x1 or self.y0 >= self.y1:
