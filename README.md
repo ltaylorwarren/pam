@@ -21,7 +21,7 @@ git clone https://github.com/HelgeKeck/pam.git
 bash ~/pam/install.sh
 ```
 
-## Configure Moonraker update manager (optional)
+## Configure Moonraker update manager
 You dont need to, but if you want to receive updates for PAM put this at the end of the moonraker.conf file.
 ```ini
 # PAM
