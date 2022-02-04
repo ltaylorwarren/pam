@@ -14,22 +14,23 @@ Adds dynamic mesh calibration to your RatOS printer.
 
 # Installation
 
-## On your Raspberry
+## Install
+SSH into your raspberry PI and execute these commands.
 ```
 cd ~/
 git clone https://github.com/HelgeKeck/pam.git
 bash ~/pam/install.sh
 ```
 
-## Activate PAM
-Make sure you add this to the overwrite section at the end of your printer.cfg file.
+## Activate
+Add this to the overwrite section at the end of your printer.cfg file.
 ```ini
 # PAM
 [include pam/pam.cfg]
 ```
 
-## Optional configuration
-This is not needed to use PAM, its entirely optional. If you use it, put it after your PAM activation/include.
+## Configure
+This is optional, if you use it, put it after your PAM activation/include.
 ```ini
 [pam]
 # clearance between print area and mesh area in mm, default = 0. 
@@ -38,8 +39,8 @@ This is not needed to use PAM, its entirely optional. If you use it, put it afte
 offset: 10          
 ```
 
-## Stay up to date
-You dont need to, but if you want to receive updates for PAM put this at the end of the moonraker.conf file.
+## Update
+If you want to receive updates for PAM put this at the end of the moonraker.conf file.
 ```ini
 # PAM
 [update_manager pam]
@@ -51,7 +52,7 @@ is_system_service: False
 ```
 
 ## Modify your printer's start g-code in your slicer
-Please use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
+Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
 
 Make sure this is the first line in your Start Gcode section.
 - PrusaSlicer / SuperSlicer
