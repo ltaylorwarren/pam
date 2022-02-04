@@ -34,7 +34,7 @@ is_system_service: False
 ```
 
 ## Define the Gcode Macro
-Make sure you add this to the overwrite section in your printer.cfg, just make it the last include.
+Make sure you add this to the overwrite section at the end of your printer.cfg file.
 ```ini
 # printer.cfg
 
