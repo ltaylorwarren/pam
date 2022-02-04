@@ -49,7 +49,7 @@ offset: 10
 ```
 
 ## Modify your printer's start g-code in your slicer
-Please use minimum SuperSlicer Version 2.3.57.10, earlier version can report negative first layer coordinates.
+Please use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
 
 Make sure this is the first line in your Start Gcode section.
 - PrusaSlicer / SuperSlicer
