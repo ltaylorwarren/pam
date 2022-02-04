@@ -16,10 +16,21 @@ class PAM:
         self.probe_y_step = float((self.bed_mesh.bmc.orig_config['mesh_max'][1] - self.bed_mesh.bmc.orig_config['mesh_min'][1]) / self.bed_mesh.bmc.orig_config['y_count'])
 
     def cmd_MESH_CONFIG(self, param):
-        self.x0 = param.get_float('X0', None, minval=self.toolhead.kin.axes_min.x, maxval=self.toolhead.kin.axes_max.x) 
-        self.y0 = param.get_float('Y0', None, minval=self.toolhead.kin.axes_min.y, maxval=self.toolhead.kin.axes_max.y)
-        self.x1 = param.get_float('X1', None, minval=self.toolhead.kin.axes_min.x, maxval=self.toolhead.kin.axes_max.x)
-        self.y1 = param.get_float('Y1', None, minval=self.toolhead.kin.axes_min.y, maxval=self.toolhead.kin.axes_max.y)
+        self.x0 = param.get_float('X0', None, -1000, maxval=1000) 
+        self.y0 = param.get_float('Y0', None, -1000, maxval=1000)
+        self.x1 = param.get_float('X1', None, -1000, maxval=1000)
+        self.y1 = param.get_float('Y1', None, -1000, maxval=1000)
+        if self.x0 < 0 or self.y0 < 0:
+            self.gcode.respond_raw("Wrong first layer coordinates, please update to minimum SuperSlicer Version 2.3.57.10!")
+            self.x0 = self.toolhead.kin.axes_min.x
+            self.y0 = self.toolhead.kin.axes_min.y
+            self.x1 = self.toolhead.kin.axes_max.x
+            self.y1 = self.toolhead.kin.axes_max.y
+            return
+        self.x0 = max(self.x0, self.toolhead.kin.axes_min.x) 
+        self.y0 = max(self.y0, self.toolhead.kin.axes_min.y)
+        self.x1 = min(self.x1, self.toolhead.kin.axes_max.x)
+        self.y1 = min(self.y1, self.toolhead.kin.axes_max.y)
 
     def cmd_PAM(self, param):
         if self.x0 >= self.x1 or self.y0 >= self.y1:
