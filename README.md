@@ -22,9 +22,9 @@ bash ~/pam/install.sh
 ```
 
 ## Configure Moonraker update manager (optional)
+You dont need to, but if you want to receive updates for PAM put this at the end of the moonraker.conf file.
 ```ini
-# moonraker.conf
-
+# PAM
 [update_manager pam]
 type: git_repo
 primary_branch: main
