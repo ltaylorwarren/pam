@@ -33,14 +33,16 @@ origin: https://github.com/HelgeKeck/pam.git
 is_system_service: False
 ```
 
-## Define the Gcode Macro
+## Activate PAM
 Make sure you add this to the overwrite section at the end of your printer.cfg file.
 ```ini
-# printer.cfg
-
+# PAM
 [include pam/pam.cfg]
+```
 
-# optional configuration
+## Optional configuration
+This is not needed to use PAM, its entirely optional  
+```ini
 [pam]
 # clearance between print area and mesh area in mm, default = 0. 
 # positive value = mesh area will be bigger then the print area
