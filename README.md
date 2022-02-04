@@ -41,7 +41,7 @@ Make sure you add this to the overwrite section at the end of your printer.cfg f
 ```
 
 ## Optional configuration
-This is not needed to use PAM, its entirely optional. Make sure to put it after your PAM activation/include.
+This is not needed to use PAM, its entirely optional. If you use it, put it after your PAM activation/include.
 ```ini
 [pam]
 # clearance between print area and mesh area in mm, default = 0. 
