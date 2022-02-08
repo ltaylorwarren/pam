@@ -92,7 +92,7 @@ echo -e "   |  _/| - || |\/| |"
 echo -e "   |_|  |_|_||_|  |_|"
 echo -e ""
 echo -e "Print Area Mesh for RatOS"
-echo -e "v0.0.5"
+echo -e "v0.0.6"
 echo -e ""
 stop_klipper
 create_macro_dir
