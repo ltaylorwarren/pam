@@ -36,9 +36,8 @@ class PAM:
         mesh_cy = max(3, int((mesh_y1 - mesh_y0) / self.probe_y_step))
         if self.algo == 'bicubic':
             if mesh_cx < 4 or mesh_cy < 4:
-                if mesh_cx > 6 or mesh_cy > 6:
-                    mesh_cx = min(6, mesh_cx)
-                    mesh_cy = min(6, mesh_cy)
+                mesh_cx = min(6, mesh_cx)
+                mesh_cy = min(6, mesh_cy)
         elif self.algo == 'lagrange':
             mesh_cx = min(6, mesh_cx)
             mesh_cy = min(6, mesh_cy)
