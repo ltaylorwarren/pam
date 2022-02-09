@@ -2,6 +2,7 @@ class PAM:
 
     def __init__(self, config):
         self.config = config
+        self.x0 = self.y0 = self.x1 = self.y1 = 0
         self.printer = self.config.get_printer()
         self.gcode = self.printer.lookup_object('gcode')
         self.bed_mesh = self.printer.lookup_object('bed_mesh')
