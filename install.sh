@@ -44,6 +44,7 @@ function create_macro_dir {
 function link_macro {
     if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
         if [ -d "${MACRO_DIR}" ]; then
+            rm -f "${MACRO_DIR}/pam.cfg"
             ln -sf "${SRCDIR}/klipper_macro/pam.cfg" "${MACRO_DIR}/pam.cfg"
         else
             echo -e "ERROR: ${MACRO_DIR} not found."
@@ -57,6 +58,7 @@ function link_macro {
 
 function link_extra {
     if [ -d "${KLIPPY_EXTRAS}" ]; then
+        rm -f "${KLIPPY_EXTRAS}/pam.py"
         ln -sf "${SRCDIR}/klippy_extra/pam.py" "${KLIPPY_EXTRAS}/pam.py"
     else
         echo -e "ERROR: ${KLIPPY_EXTRAS} not found."
@@ -92,7 +94,7 @@ echo -e "   |  _/| - || |\/| |"
 echo -e "   |_|  |_|_||_|  |_|"
 echo -e ""
 echo -e "Print Area Mesh for RatOS"
-echo -e "v0.0.7"
+echo -e "v0.0.8"
 echo -e ""
 stop_klipper
 create_macro_dir
