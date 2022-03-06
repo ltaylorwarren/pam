@@ -40,11 +40,15 @@ offset: 10
 # Configure your Slicer
 Make sure this is the first line in your Start Gcode section.
 
-Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
-
 - PrusaSlicer / SuperSlicer
+- Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
 ```ini
 MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
+```
+
+- Ideamaker 
+```ini
+MESH_CONFIG X0={print_pos_min_x} Y0={print_pos_min_y} X1={print_pos_max_x} Y1={print_pos_max_y}
 ```
 
 # Update
