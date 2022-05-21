@@ -38,7 +38,9 @@ offset: 10
 ```
 
 # Configure your Slicer
-Make sure this is the first line in your Start Gcode section.
+1. Make sure this is the first line in your Start Gcode section.
+2. Make sure this is the first line in your Start Gcode section.
+3. Make sure this is the first line in your Start Gcode section.
 
 - PrusaSlicer / SuperSlicer
 - Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
