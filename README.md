@@ -57,9 +57,11 @@ MESH_CONFIG X0={print_pos_min_x} Y0={print_pos_min_y} X1={print_pos_max_x} Y1={p
 ```
 
 - Cura
+
 To make PAM work with Cura you need to install this third party cura plugin:
+
 https://github.com/kmarty/klipper_config_km_addons/blob/master/bed_mesh_calibrate/MeshPrintSize.py
- 
+
 ```ini
 MESH_CONFIG X0=%MINX% Y0=%MINY% X1=%MAXX% Y1=%MAXY%
 ```
