@@ -38,7 +38,6 @@ offset: 10
 ```
 
 # Configure your Slicer
-- PrusaSlicer / SuperSlicer
 - Use minimum SuperSlicer Version 2.3.57.10, earlier versions can report negative first layer coordinates.
 
 Please follow these 3 steps
@@ -47,6 +46,7 @@ Please follow these 3 steps
 2. Make sure this is the first line in your Start Gcode section.
 3. Make sure this is the first line in your Start Gcode section.
 
+- PrusaSlicer / SuperSlicer
 ```ini
 MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
 ```
@@ -54,6 +54,14 @@ MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={firs
 - Ideamaker 
 ```ini
 MESH_CONFIG X0={print_pos_min_x} Y0={print_pos_min_y} X1={print_pos_max_x} Y1={print_pos_max_y}
+```
+
+- Cura
+To make PAM work with Cura you need to install this third party cura plugin:
+https://github.com/kmarty/klipper_config_km_addons/blob/master/bed_mesh_calibrate/MeshPrintSize.py
+ 
+```ini
+MESH_CONFIG X0=%MINX% Y0=%MINY% X1=%MAXX% Y1=%MAXY%
 ```
 
 # Update
