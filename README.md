@@ -32,8 +32,8 @@ This is optional, if you use it, put it after your PAM activation/include.
 ```ini
 [pam]
 # clearance between print area and mesh area in mm, default = 0. 
-# positive value = mesh area will be bigger then the print area
-# negative value = mesh area will be smaller then the print area
+# positive value = mesh area will be bigger than the print area
+# negative value = mesh area will be smaller than the print area
 offset: 10          
 ```
 
