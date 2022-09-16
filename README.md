@@ -51,7 +51,7 @@ START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_te
 To make PAM work with Cura you need to install a post processing plugin
 
 1. in cura open menu ```Help->Show configuration folder```
-2. copy the [MeshPrintSize.py](/cura/MeshPrintSize.py) file into the ```scripts``` folder
+2. copy [MeshPrintSize.py](/cura/MeshPrintSize.py) into the ```scripts``` folder
 3. restart cura
 4. in cura open menu ```Extensions->Post processing->Modify G-Code``` and select ```Mesh Print Size```
 
