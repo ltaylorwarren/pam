@@ -1,7 +1,7 @@
 # --------------------------------------------------------------------------------
 # This file was taken from
 # https://github.com/kmarty/klipper_config_km_addons/blob/master/bed_mesh_calibrate/MeshPrintSize.py
-# credit goes to kmarty
+# credit goes to https://github.com/kmarty
 # --------------------------------------------------------------------------------
 
 import re #To perform the search and replace.
