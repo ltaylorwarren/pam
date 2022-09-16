@@ -13,7 +13,7 @@ Adds dynamic mesh calibration to your RatOS printer.
 
 
 # Install
-SSH into your raspberry PI and execute these commands.
+SSH into your Raspberry PI and execute:
 ```
 cd ~/
 git clone https://github.com/HelgeKeck/pam.git
