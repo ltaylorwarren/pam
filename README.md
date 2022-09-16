@@ -6,7 +6,6 @@ Adds dynamic mesh calibration to your RatOS printer.
 - works out of the box with any printer running RatOS
 - respects all RatOS probe and mesh settings
 
-
 # 1. Install
 SSH into your Raspberry PI and execute:
 ```
