@@ -28,6 +28,7 @@ Add this to the overwrite section at the end of your printer.cfg file.
 ```
 
 # Configure your Slicer
+Modify your printer start g-code
 
 - PrusaSlicer / SuperSlicer
 ```ini
@@ -42,6 +43,10 @@ START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_te
 ```
 
 - Cura
+```ini
+MESH_CONFIG X0=%MINX% Y0=%MINY% X1=%MAXX% Y1=%MAXY%
+START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_temperature]
+```
 
 To make PAM work with Cura you need to install a post processing plugin
 
@@ -50,11 +55,6 @@ To make PAM work with Cura you need to install a post processing plugin
 3. copy the ```MeshPrintSize.py``` file into the ```scripts``` folder
 4. restart cura
 5. in cura open menu ```Extensions->Post processing->Modify G-Code``` and select ```Mesh Print Size```
-
-```ini
-MESH_CONFIG X0=%MINX% Y0=%MINY% X1=%MAXX% Y1=%MAXY%
-START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_temperature]
-```
 
 # Update
 If you want to receive updates for PAM put this at the end of the moonraker.conf file.
