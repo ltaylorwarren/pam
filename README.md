@@ -3,7 +3,7 @@ Print Area Mesh for RatOS
 
 Adds dynamic mesh calibration to your RatOS printer.
 
-- Works out of the box with any printer running RatOS
+- works out of the box with any printer running RatOS
 - respects all RatOS probe and mesh settings
 
 
