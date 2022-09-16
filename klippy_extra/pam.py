@@ -22,7 +22,7 @@ class PAM:
         self.x1 = param.get_float('X1', None, -1000, maxval=1000)
         self.y1 = param.get_float('Y1', None, -1000, maxval=1000)
         if self.x0 < 0 or self.y0 < 0:
-            self.gcode.respond_raw("Wrong first layer coordinates, please update to minimum SuperSlicer Version 2.3.57.10!")
+            self.gcode.respond_raw("Wrong first layer coordinates!")
 
     def cmd_PAM(self, param):
         if self.x0 >= self.x1 or self.y0 >= self.y1:
