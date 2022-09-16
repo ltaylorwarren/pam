@@ -29,20 +29,16 @@ Add this to the overwrite section at the end of your printer.cfg file.
 
 # Configure your Slicer
 
-Please follow these 3 steps
-
-1. Make sure this is the first line in your Start Gcode section.
-2. Make sure this is the first line in your Start Gcode section.
-3. Make sure this is the first line in your Start Gcode section.
-
 - PrusaSlicer / SuperSlicer
 ```ini
 MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
+START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_temperature]
 ```
 
 - Ideamaker 
 ```ini
 MESH_CONFIG X0={print_pos_min_x} Y0={print_pos_min_y} X1={print_pos_max_x} Y1={print_pos_max_y}
+START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_temperature]
 ```
 
 - Cura
@@ -57,6 +53,7 @@ To make PAM work with Cura you need to install a post processing plugin
 
 ```ini
 MESH_CONFIG X0=%MINX% Y0=%MINY% X1=%MAXX% Y1=%MAXY%
+START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_temperature]
 ```
 
 # Update
