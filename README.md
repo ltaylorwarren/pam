@@ -57,7 +57,7 @@ MESH_CONFIG X0={print_pos_min_x} Y0={print_pos_min_y} X1={print_pos_max_x} Y1={p
 
 - Cura
 
-To make PAM work with Cura you need to install a postprocessing plugin
+To make PAM work with Cura you need to install a post processing plugin
 
 1. download Cura post processing plugin from https://github.com/HelgeKeck/pam/tree/main/cura/MeshPrintSize.py
 2. in cura open menu ```Help->Show configuration folder```
