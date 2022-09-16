@@ -27,16 +27,6 @@ Add this to the overwrite section at the end of your printer.cfg file.
 [include pam/pam.cfg]
 ```
 
-# Configure PAM
-This is optional, if you use it, put it after your PAM activation/include.
-```ini
-[pam]
-# clearance between print area and mesh area in mm, default = 0. 
-# positive value = mesh area will be bigger than the print area
-# negative value = mesh area will be smaller than the print area
-offset: 10          
-```
-
 # Configure your Slicer
 
 Please follow these 3 steps
