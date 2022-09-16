@@ -22,8 +22,7 @@ Add this to the overwrite section at the end of your printer.cfg file.
 [include pam/pam.cfg]
 ```
 
-# 3. Configure your Slicer
-Modify your printer start g-code
+# 3. Configure your Slicer start print g-code
 
 - PrusaSlicer / SuperSlicer
 ```ini
