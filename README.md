@@ -12,7 +12,7 @@ Adds dynamic mesh calibration to your RatOS printer.
 - Independent probe count for x and y direction based on the mesh configuration
 
 
-# Install
+# 1. Install
 SSH into your Raspberry PI and execute:
 ```
 cd ~/
@@ -20,14 +20,14 @@ git clone https://github.com/HelgeKeck/pam.git
 bash ~/pam/install.sh
 ```
 
-# Activate
+# 2. Activate
 Add this to the overwrite section at the end of your printer.cfg file.
 ```ini
 # PAM
 [include pam/pam.cfg]
 ```
 
-# Configure your Slicer
+# 3. Configure your Slicer
 Modify your printer start g-code
 
 - PrusaSlicer / SuperSlicer
@@ -55,7 +55,7 @@ To make PAM work with Cura you need to install a post processing plugin
 3. restart cura
 4. in cura open menu ```Extensions->Post processing->Modify G-Code``` and select ```Mesh Print Size```
 
-# Update
+# 4. Update
 If you want to receive updates for PAM put this at the end of the moonraker.conf file.
 ```ini
 # PAM
