@@ -12,7 +12,6 @@ import re #To perform the search and replace.
 
 from ..Script import Script
 
-
 class MeshPrintSize(Script):
 
     def getSettingDataString(self):
