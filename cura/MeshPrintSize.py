@@ -1,7 +1,11 @@
 # --------------------------------------------------------------------------------
-# This file was taken from
+# Original Version from https://gist.github.com/frankbags
+# https://gist.github.com/frankbags/c85d37d9faff7bce67b6d18ec4e716ff
+# 
+# Modified version from https://github.com/kmarty 
 # https://github.com/kmarty/klipper_config_km_addons/blob/master/bed_mesh_calibrate/MeshPrintSize.py
-# credit goes to https://github.com/kmarty
+#
+# thank you frankbags and kmarty!
 # --------------------------------------------------------------------------------
 
 import re #To perform the search and replace.
