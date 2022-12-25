@@ -81,6 +81,7 @@ class PAM:
         prime_y = mesh_y0 + ((mesh_y1 - mesh_y0) / 2)
         if toolhead_max_x - mesh_x1 - prime_offset_right > prime_width:
             # right
+            location = 'right'
             prime_x = mesh_x1 + prime_offset_right + (prime_width / 2)
             if prime_y < toolhead_max_y / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
@@ -88,6 +89,7 @@ class PAM:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'backwards'
         elif mesh_x0 - toolhead_min_x - prime_offset_left > prime_width:
             # left
+            location = 'left'
             prime_x = mesh_x0 - prime_offset_left - (prime_width / 2)
             if prime_y < toolhead_max_y / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
@@ -95,6 +97,7 @@ class PAM:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'backwards'
         elif mesh_y0 - toolhead_min_y - prime_offset_front > prime_width:
             # front
+            location = 'front'
             prime_y = mesh_y0 - prime_offset_front - (prime_width / 2)
             if prime_x > toolhead_max_x / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
@@ -106,6 +109,7 @@ class PAM:
                     prime_x = toolhead_max_x - prime_length - (prime_width / 2)
         elif toolhead_max_y - mesh_y1 - prime_offset_back > prime_width:
             # back
+            location = 'back'
             prime_y = mesh_y1 + prime_offset_back + (prime_width / 2)
             if prime_x > toolhead_max_x / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
@@ -118,6 +122,7 @@ class PAM:
 
         ratos_gcode.variables['nozzle_prime_start_x'] = prime_x
         ratos_gcode.variables['nozzle_prime_start_y'] = prime_y
+        ratos_gcode.variables['nozzle_prime_location'] = location
         ratos_gcode.variables['nozzle_prime_direction'] = prime_dir
 
 def load_config(config):
