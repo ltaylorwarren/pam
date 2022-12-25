@@ -96,17 +96,25 @@ class PAM:
         elif mesh_y0 - toolhead_min_y - prime_offset_front > prime_width:
             # front
             prime_y = mesh_y0 - prime_offset_front - (prime_width / 2)
-            if prime_x > toolhead_min_x + prime_length:
+            if prime_x > toolhead_max_x / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
+                if prime_x < toolhead_max_x / 2:
+                    prime_x = toolhead_min_y + prime_length + (prime_width / 2)
             else:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'right'
+                if prime_x > toolhead_max_x - prime_length - (prime_width / 2):
+                    prime_x = toolhead_max_x - prime_length - (prime_width / 2)
         elif toolhead_max_y - mesh_y1 - prime_offset_back > prime_width:
             # back
             prime_y = mesh_y1 + prime_offset_back + (prime_width / 2)
-            if prime_x > toolhead_min_x + prime_length:
+            if prime_x > toolhead_max_x / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
+                if prime_x < toolhead_max_x / 2:
+                    prime_x = toolhead_min_y + prime_length + (prime_width / 2)
             else:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'right'
+                if prime_x > toolhead_max_x - prime_length - (prime_width / 2):
+                    prime_x = toolhead_max_x - prime_length - (prime_width / 2)
 
         ratos_gcode.variables['nozzle_prime_start_x'] = prime_x
         ratos_gcode.variables['nozzle_prime_start_y'] = prime_y
