@@ -30,7 +30,7 @@ Add this to the overwrite section at the end of your printer.cfg file.
 optimus_prime: False            # enables adaptive purging
                                 # default = False
 
-safe_pos_after_prime: False     # moves the toolhead to a safe position before starting the print. avoids crashing into the blob
+safe_pos_after_prime: False     # moves the toolhead to a safe position before starting the print.
                                 # only for primeblob
                                 # default = False
 
