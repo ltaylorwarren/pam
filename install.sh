@@ -94,7 +94,7 @@ echo -e "   |  _/| - || |\/| |"
 echo -e "   |_|  |_|_||_|  |_|"
 echo -e ""
 echo -e "Print Area Mesh for RatOS"
-echo -e "v0.1.0"
+echo -e "v0.1.4"
 echo -e ""
 stop_klipper
 create_macro_dir
@@ -102,13 +102,6 @@ link_macro
 link_extra
 start_klipper
 echo -e "Installation finished!"
-echo -e ""
-echo -e "Add this line to the overrides section in your printer.cfg"
-echo -e "[include pam/pam.cfg]"
-echo -e ""
-echo -e "PAM recommends to use minimum SuperSlicer Version 2.3.57.10!"
-echo -e ""
-echo -e "Happy meshing!"
 echo -e ""
 
 # If something checks status of install
