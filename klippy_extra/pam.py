@@ -1,5 +1,5 @@
 class PAM:
-
+    
     def __init__(self, config):
         self.config = config
         self.x0 = self.y0 = self.x1 = self.y1 = 0
@@ -82,6 +82,8 @@ class PAM:
             # right
             location = 'right'
             prime_x = mesh_x1 + self.toolhead_offset_right + (prime_width / 2)
+            if prime_y + prime_length > toolhead_max_y:
+                prime_y = toolhead_max_y - prime_length
             if prime_y < toolhead_max_y / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
             else:
@@ -90,6 +92,8 @@ class PAM:
             # left
             location = 'left'
             prime_x = mesh_x0 - self.toolhead_offset_left - (prime_width / 2)
+            if prime_y + prime_length > toolhead_max_y:
+                prime_y = toolhead_max_y - prime_length
             if prime_y < toolhead_max_y / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
             else:
@@ -98,6 +102,8 @@ class PAM:
             # front
             location = 'front'
             prime_y = mesh_y0 - self.toolhead_offset_front - (prime_width / 2)
+            if prime_x + prime_length > toolhead_max_x:
+                prime_x = toolhead_max_x - prime_length
             if prime_x > toolhead_max_x / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
                 if prime_x < toolhead_max_x / 2:
@@ -110,6 +116,8 @@ class PAM:
             # back
             location = 'back'
             prime_y = mesh_y1 + self.toolhead_offset_back + (prime_width / 2)
+            if prime_x + prime_length > toolhead_max_x:
+                prime_x = toolhead_max_x - prime_length
             if prime_x > toolhead_max_x / 2:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
                 if prime_x < toolhead_max_x / 2:
