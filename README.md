@@ -5,7 +5,7 @@ Adds dynamic mesh calibration to your RatOS printer.
 
 - works out of the box with any printer running RatOS
 - respects all RatOS probe and mesh settings
-- adaptive purging (only for RatOS 2.X)
+- adaptive purging
 
 # 1. Install
 SSH into your Raspberry PI and execute:
