@@ -12,6 +12,7 @@ class PAM:
         self.toolhead_offset_front = self.config.getfloat('toolhead_offset_front', 15.0)
         self.toolhead_offset_back = self.config.getfloat('toolhead_offset_back', 15.0)
         self.optimus_prime = self.config.getboolean('optimus_prime', False)
+        self.safe_pos_after_prime = self.config.getboolean('safe_pos_after_prime', False)
         self.gcode.register_command('PAM', self.cmd_PAM, desc=("PAM"))
         self.gcode.register_command('MESH_CONFIG', self.cmd_MESH_CONFIG, desc=("MESH_CONFIG"))
         self.printer.register_event_handler("klippy:connect", self.handle_connect)
@@ -131,6 +132,7 @@ class PAM:
         ratos_gcode.variables['nozzle_prime_start_y'] = prime_y
         ratos_gcode.variables['nozzle_prime_location'] = location
         ratos_gcode.variables['nozzle_prime_direction'] = prime_dir
+        ratos_gcode.variables['safe_pos_after_prime'] = self.safe_pos_after_prime
 
 def load_config(config):
     return PAM(config)
