@@ -38,16 +38,11 @@ class PAM:
         mesh_y0 = max(self.y0, self.bed_mesh.bmc.orig_config['mesh_min'][1])
         mesh_x1 = min(self.x1, self.bed_mesh.bmc.orig_config['mesh_max'][0])
         mesh_y1 = min(self.y1, self.bed_mesh.bmc.orig_config['mesh_max'][1])
-        mesh_cx = max(3, int(0.5 + (mesh_x1 - mesh_x0) / self.probe_x_step))
-        mesh_cy = max(3, int(0.5 + (mesh_y1 - mesh_y0) / self.probe_y_step))
-        if self.bed_mesh.bmc.orig_config['algo'] == 'lagrange':
-            # Lagrange interpolation tends to oscillate when using more than 6 samples
-           mesh_cx = min(6, mesh_cx)
-           mesh_cy = min(6, mesh_cy)
-        elif self.bed_mesh.bmc.orig_config['algo'] == 'bicubic':
-            # Bicubic interpolation needs at least 4 samples on each axis
-            mesh_cx = max(4, mesh_cx)
-            mesh_cy = max(4, mesh_cy)
+        mesh_cx = max(3, int((mesh_x1 - mesh_x0) / self.probe_x_step))
+        mesh_cy = max(3, int((mesh_y1 - mesh_y0) / self.probe_y_step))
+        if self.bed_mesh.bmc.orig_config['algo'] == 'lagrange' or (self.bed_mesh.bmc.orig_config['algo'] == 'bicubic' and (mesh_cx < 4 or mesh_cy < 4)):
+            mesh_cx = min(6, mesh_cx)
+            mesh_cy = min(6, mesh_cy)
         if self.optimus_prime == True:
             self.set_priming_location(mesh_x0, mesh_y0, mesh_x1, mesh_y1)
         self.gcode.respond_raw("PAM v0.1.4 bed mesh leveling...")
