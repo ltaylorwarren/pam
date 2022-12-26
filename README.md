@@ -28,7 +28,7 @@ Add this to the overwrite section at the end of your printer.cfg file.
 # PAM
 [pam]
 optimus_prime: False            # enables adaptive purging
-                                # default = FALSE
+                                # default = False
 
 # toolhead offsets, to make sure the toolhead doesnt hit the prime blob
 toolhead_offset_left: 35.0      # default = 35 mm
