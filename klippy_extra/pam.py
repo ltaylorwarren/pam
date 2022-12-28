@@ -46,7 +46,7 @@ class PAM:
         # if self.optimus_prime == True:
         #     self.set_priming_location(mesh_x0, mesh_y0, mesh_x1, mesh_y1)
         self.gcode.respond_raw("PAM v0.1.6 bed mesh leveling...")
-        self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=pam mesh_min={0},{1} mesh_max={2},{3} probe_count={4},{5} relative_reference_index=-1'.format(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy))
+        self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos mesh_min={0},{1} mesh_max={2},{3} probe_count={4},{5} relative_reference_index=-1'.format(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy))
 
     def set_priming_location(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1):
         ratos_gcode = self.printer.lookup_object('gcode_macro RatOS')
