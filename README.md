@@ -1,7 +1,9 @@
 # PAM for RatOS
 Print Area Mesh for RatOS
 
-Adds dynamic mesh calibration to your RatOS printer.
+Adds dynamic mesh calibration to your RatOS printer and meshes only the area where your object is located.
+
+PAM doesnt support any RatOS Alpha or Beta Version!
 
 - works out of the box with any printer running RatOS
 - respects all RatOS probe and mesh settings
