@@ -14,9 +14,9 @@ SRCDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/ && pwd )"
 # Default Parameters
 MACRO_DIR=""
 CONFIG_DIR=""
+KLIPPY_EXTRAS_DIR="${HOME}/klipper/klippy/extras"
 RATOS_V1_CONFIG_DIR="${HOME}/klipper_config"
 RATOS_V2_CONFIG_DIR="${HOME}/printer_data/config"
-KLIPPY_EXTRAS="${HOME}/klipper/klippy/extras"
 
 function get_ratos_version {
     if [ -d "${RATOS_V1_CONFIG_DIR}" ]; then
@@ -65,11 +65,11 @@ function link_macro {
 }
 
 function link_extra {
-    if [ -d "${KLIPPY_EXTRAS}" ]; then
-        rm -f "${KLIPPY_EXTRAS}/pam.py"
-        ln -sf "${SRCDIR}/klippy_extra/pam.py" "${KLIPPY_EXTRAS}/pam.py"
+    if [ -d "${KLIPPY_EXTRAS_DIR}" ]; then
+        rm -f "${KLIPPY_EXTRAS_DIR}/pam.py"
+        ln -sf "${SRCDIR}/klippy_extra/pam.py" "${KLIPPY_EXTRAS_DIR}/pam.py"
     else
-        echo -e "ERROR: ${KLIPPY_EXTRAS} not found."
+        echo -e "ERROR: ${KLIPPY_EXTRAS_DIR} not found."
         exit 1
     fi
 }
