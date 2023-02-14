@@ -66,4 +66,5 @@ primary_branch: main
 path: ~/pam
 origin: https://github.com/HelgeKeck/pam.git
 is_system_service: False
+install_script: install.sh
 ```
