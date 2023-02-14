@@ -14,6 +14,7 @@ SRCDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/ && pwd )"
 # Default Parameters
 MACRO_DIR=""
 CONFIG_DIR=""
+MACRO_FILE=""
 KLIPPY_EXTRAS_DIR="${HOME}/klipper/klippy/extras"
 RATOS_V1_CONFIG_DIR="${HOME}/klipper_config"
 RATOS_V2_CONFIG_DIR="${HOME}/printer_data/config"
@@ -21,10 +22,12 @@ RATOS_V2_CONFIG_DIR="${HOME}/printer_data/config"
 function get_ratos_version {
     if [ -d "${RATOS_V1_CONFIG_DIR}" ]; then
         echo -e "RatOS Version 1.x"
+        MACRO_FILE="pam.cfg"
         CONFIG_DIR="${RATOS_V1_CONFIG_DIR}"
     else
         if [ -d "${RATOS_V2_CONFIG_DIR}" ]; then
             echo -e "RatOS Version 2.x"
+            MACRO_FILE="pam_v2.cfg"
             CONFIG_DIR="${RATOS_V2_CONFIG_DIR}"
         else
             echo -e "ERROR: No RatOS config folder found."
@@ -57,7 +60,7 @@ function create_macro_dir {
 function link_macro {
     if [ -d "${MACRO_DIR}" ]; then
         rm -f "${MACRO_DIR}/pam.cfg"
-        ln -sf "${SRCDIR}/klipper_macro/pam.cfg" "${MACRO_DIR}/pam.cfg"
+        ln -sf "${SRCDIR}/klipper_macro/${MACRO_FILE}" "${MACRO_DIR}/pam.cfg"
     else
         echo -e "ERROR: ${MACRO_DIR} not found."
         exit 1
@@ -82,7 +85,7 @@ echo -e "   |_|  |_|_||_|  |_|"
 echo -e ""
 echo -e "Print Area Mesh for RatOS"
 echo -e ""
-echo -e "PAM Version 0.2"
+echo -e "PAM Version 0.2.3"
 get_ratos_version
 stop_klipper
 create_macro_dir
