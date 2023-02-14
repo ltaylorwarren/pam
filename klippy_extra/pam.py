@@ -43,7 +43,7 @@ class PAM:
         if self.bed_mesh.bmc.orig_config['algo'] == 'lagrange' or (self.bed_mesh.bmc.orig_config['algo'] == 'bicubic' and (mesh_cx < 4 or mesh_cy < 4)):
             mesh_cx = min(6, mesh_cx)
             mesh_cy = min(6, mesh_cy)
-        self.gcode.respond_raw("PAM v0.2.0 bed mesh leveling...")
+        self.gcode.respond_raw("PAM v0.2.2 bed mesh leveling...")
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index=-1'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy))
 
 def load_config(config):
