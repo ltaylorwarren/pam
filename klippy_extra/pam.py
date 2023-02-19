@@ -33,7 +33,7 @@ class PAM:
         if self.x0 >= self.x1 or self.y0 >= self.y1:
             self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos')
             return
-        mesh_profile = param.get('PROFILE', None, "ratos")
+        mesh_profile = param.get('PROFILE')
         mesh_x0 = max(self.x0, self.bed_mesh.bmc.orig_config['mesh_min'][0])
         mesh_y0 = max(self.y0, self.bed_mesh.bmc.orig_config['mesh_min'][1])
         mesh_x1 = min(self.x1, self.bed_mesh.bmc.orig_config['mesh_max'][0])
