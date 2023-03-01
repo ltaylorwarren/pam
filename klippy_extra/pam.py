@@ -48,7 +48,7 @@ class PAM:
             mesh_cx = min(6, mesh_cx)
             mesh_cy = min(6, mesh_cy)
         reference_index = self._get_reference_index(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy)
-        self.gcode.respond_raw("PAM v0.2.3 bed mesh leveling...")
+        self.gcode.respond_raw("PAM v0.3.0 bed mesh leveling...")
         self.gcode.respond_raw('Mesh Reference Index {0}'.format(str(reference_index)))
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index={7}'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy, reference_index))
 
