@@ -56,7 +56,20 @@ To make PAM work with Cura you need to install a post processing plugin
 3. restart cura
 4. in cura open menu ```Extensions -> Post processing -> Modify G-Code``` and select ```Mesh Print Size```
 
-# 4. Update
+# 4. Relative Reference Index
+This is optional, but if you want, PAM can calculate the relative reference index for you.  
+```ini
+# PAM
+[pam]
+auto_reference_index: True      # Activate the auto reference calculation
+                                # default = False
+z_endstop_x: 90                 # set this value only in case you dont home z in the middle of the build plate 
+                                # default = -1, PAM will use the RatOS values, vanilla klipper the middle of the build plate
+z_endstop_y: 90                 # set this value only in case you dont home z in the middle of the build plate
+                                # default = -1, PAM will use the RatOS values, vanilla klipper the middle of the build plate
+```
+
+# 5. Update
 If you want to receive updates for PAM put this at the end of the moonraker.conf file.
 ```ini
 # PAM
