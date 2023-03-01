@@ -50,7 +50,7 @@ class PAM:
             mesh_cx = min(6, mesh_cx)
             mesh_cy = min(6, mesh_cy)
         reference_index = self.get_reference_index(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy)
-        self.gcode.respond_raw("PAM v0.3.2 bed mesh leveling...")
+        self.gcode.respond_raw("PAM v0.3.3 bed mesh leveling...")
         self.gcode.respond_raw('Relative Reference Index {0}'.format(str(reference_index)))
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index={7}'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy, reference_index))
 
@@ -108,15 +108,8 @@ class PAM:
         return reference_index
     
     def generate_points(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
-        x_cnt = mesh_cx
-        y_cnt = mesh_cy
-        min_x = mesh_x0
-        max_x = mesh_x1
-        min_y = mesh_y0
-        max_y = mesh_y1
-
-        x_dist = (max_x - min_x) / (x_cnt - 1)
-        y_dist = (max_y - min_y) / (y_cnt - 1)
+        x_dist = (mesh_x1 - mesh_x0) / (mesh_cx - 1)
+        y_dist = (mesh_y1 - mesh_y0) / (mesh_cy - 1)
         # floor distances down to next hundredth
         x_dist = math.floor(x_dist * 100) / 100
         y_dist = math.floor(y_dist * 100) / 100
@@ -127,22 +120,22 @@ class PAM:
         if self.bed_mesh.bmc.radius is not None:
             # round bed, min/max needs to be recalculated
             y_dist = x_dist
-            new_r = (x_cnt // 2) * x_dist
-            min_x = min_y = -new_r
-            max_x = max_y = new_r
+            new_r = (mesh_cx // 2) * x_dist
+            mesh_x0 = mesh_y0 = -new_r
+            mesh_x1 = mesh_y1 = new_r
         else:
-            # rectangular bed, only re-calc max_x
-            max_x = min_x + x_dist * (x_cnt - 1)
-        pos_y = min_y
+            # rectangular bed, only re-calc mesh_x1
+            mesh_x1 = mesh_x0 + x_dist * (mesh_cx - 1)
+        pos_y = mesh_y0
         points = []
-        for i in range(y_cnt):
-            for j in range(x_cnt):
+        for i in range(mesh_cy):
+            for j in range(mesh_cx):
                 if not i % 2:
                     # move in positive directon
-                    pos_x = min_x + j * x_dist
+                    pos_x = mesh_x0 + j * x_dist
                 else:
                     # move in negative direction
-                    pos_x = max_x - j * x_dist
+                    pos_x = mesh_x1 - j * x_dist
                 if self.bed_mesh.bmc.radius is None:
                     # rectangular bed, append
                     points.append((pos_x, pos_y))
@@ -183,7 +176,7 @@ class PAM:
             for ac in adj_coords:
                 # make sure that coordinates are within the mesh boundary
                 if self.bed_mesh.bmc.radius is None:
-                    if within(ac, (min_x, min_y), (max_x, max_y), .000001):
+                    if within(ac, (mesh_x0, mesh_y0), (mesh_x1, mesh_y1), .000001):
                         valid_coords.append(ac)
                 else:
                     dist_from_origin = math.sqrt(ac[0]*ac[0] + ac[1]*ac[1])

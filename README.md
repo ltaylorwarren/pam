@@ -10,19 +10,17 @@ git clone https://github.com/HelgeKeck/pam.git
 bash ~/pam/install.sh
 ```
 
-# 2. PAM for RatOS
+# 2. Activate
 
-Add this line to the override section, at the end of your printer.cfg file.
+If you use ***RatOS***, add this line to your printer.cfg.
 ```ini
-[include pam/pam.cfg]
+[include pam/ratos.cfg]
 ```
 
-# 2. PAM for Klipper
-Ignore this if you are using RatOS!
+If you use ***Klipper***, add this line to your printer.cfg and call `PAM PROFILE=default` instead of `BED_MESH_CALIBRATE`.
 
-In your gcode call `PAM PROFILE=default` instead of `BED_MESH_CALIBRATE`.
 ```ini
-[pam]
+[include pam/klipper.cfg]
 ```
 
 # 3. Modify your slicers start print g-code
