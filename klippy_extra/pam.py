@@ -49,28 +49,54 @@ class PAM:
         if self.bed_mesh.bmc.orig_config['algo'] == 'lagrange' or (self.bed_mesh.bmc.orig_config['algo'] == 'bicubic' and (mesh_cx < 4 or mesh_cy < 4)):
             mesh_cx = min(6, mesh_cx)
             mesh_cy = min(6, mesh_cy)
-        reference_index = self._get_reference_index(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy)
-        self.gcode.respond_raw("PAM v0.3.1 bed mesh leveling...")
-        self.gcode.respond_raw('Mesh Reference Index {0}'.format(str(reference_index)))
+        reference_index = self.get_reference_index(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy)
+        self.gcode.respond_raw("PAM v0.3.2 bed mesh leveling...")
+        self.gcode.respond_raw('Relative Reference Index {0}'.format(str(reference_index)))
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index={7}'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy, reference_index))
 
-    def _get_reference_index(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
+    def get_reference_index(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
+        # by default the reference index is deactivated
         reference_index = -1
+
+        # return default if feature is turned off
         if self.auto_reference_index == False:
             return reference_index
 
+        # get ratos z-endstop xy coordinates
         if self.z_endstop_x < 0 or self.z_endstop_y < 0:
-            self.gcode.respond_raw("Z-Endstop XY coordinates not configured!")
+            configfile = self.printer.lookup_object('configfile')
+            try:
+                safe_home_x = configfile.status_raw_config["gcode_macro RatOS"]["variable_safe_home_x"]
+                safe_home_y = configfile.status_raw_config["gcode_macro RatOS"]["variable_safe_home_y"]
+                if safe_home_x == '"middle"':
+                    self.z_endstop_x = self.toolhead.kin.axes_max.x / 2.0
+                else:
+                    self.z_endstop_x = float(safe_home_x)
+                if safe_home_y == '"middle"':
+                    self.z_endstop_y = self.toolhead.kin.axes_max.y / 2.0
+                else:
+                    self.z_endstop_y = float(safe_home_y)
+            except KeyError as e:
+                self.gcode.respond_raw("PAM KeyError.")
+            except ValueError as e:
+                self.gcode.respond_raw("PAM ValueError.")
+
+        # non ratos fallback, in case user hasnt specified the coordinates 
+        if self.z_endstop_x < 0 or self.z_endstop_y < 0:
+            self.z_endstop_x = self.toolhead.kin.axes_max.x / 2.0
+            self.z_endstop_y = self.toolhead.kin.axes_max.y / 2.0
+
+        # generate probing points, if something goes wrong it returns the default value
+        if self.generate_points(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy) == False:
             return reference_index
 
-        if self._generate_points(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy) == False:
-            return reference_index
-
+        # get probe xy offsets
         x_offset = y_offset = 0.
         probe = self.printer.lookup_object('probe', None)
         if probe is not None:
             x_offset, y_offset = probe.get_offsets()[:2]
 
+        # calculate reference index
         probe_point = [self.z_endstop_x, self.z_endstop_y]
         reference_index_distance = 1000
         for i, coord in enumerate(self.points):
@@ -79,9 +105,10 @@ class PAM:
                 reference_index_distance = distance
                 reference_index = i
 
+        # und tschüss..
         return reference_index
     
-    def _generate_points(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
+    def generate_points(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
         x_cnt = mesh_cx
         y_cnt = mesh_cy
         min_x = mesh_x0
