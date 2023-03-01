@@ -97,10 +97,9 @@ class PAM:
             x_offset, y_offset = probe.get_offsets()[:2]
 
         # calculate reference index
-        probe_point = [self.z_endstop_x, self.z_endstop_y]
-        reference_index_distance = 1000
+        reference_index_distance = 9999
         for i, coord in enumerate(self.points):
-            distance = math.dist(probe_point, [coord[0] - x_offset, coord[1] - y_offset])
+            distance = math.dist([self.z_endstop_x, self.z_endstop_y], [coord[0] - x_offset, coord[1] - y_offset])
             if distance < reference_index_distance:
                 reference_index_distance = distance
                 reference_index = i
