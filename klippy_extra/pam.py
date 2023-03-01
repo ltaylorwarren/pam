@@ -1,4 +1,4 @@
-import math
+import math, ast
 
 class PAM:
     
@@ -10,6 +10,8 @@ class PAM:
         self.gcode = self.printer.lookup_object('gcode')
         self.bed_mesh = self.printer.lookup_object('bed_mesh')
         self.offset = self.config.getfloat('offset', 0.0)
+        self.z_endstop_x = self.config.getint('z_endstop_x', -1)
+        self.z_endstop_y = self.config.getint('z_endstop_y', -1)
         self.auto_reference_index = self.config.getboolean('auto_reference_index', False)
         self.toolhead_offset_left = self.config.getfloat('toolhead_offset_left', 35.0)
         self.toolhead_offset_right = self.config.getfloat('toolhead_offset_right', 30.0)
@@ -34,10 +36,10 @@ class PAM:
             self.gcode.respond_raw("Wrong first layer coordinates!")
 
     def cmd_PAM(self, param):
-        if self.x0 >= self.x1 or self.y0 >= self.y1:
-            self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE=ratos')
-            return
         mesh_profile = param.get('PROFILE')
+        if self.x0 >= self.x1 or self.y0 >= self.y1:
+            self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0}'.format(mesh_profile))
+            return
         mesh_x0 = max(self.x0, self.bed_mesh.bmc.orig_config['mesh_min'][0])
         mesh_y0 = max(self.y0, self.bed_mesh.bmc.orig_config['mesh_min'][1])
         mesh_x1 = min(self.x1, self.bed_mesh.bmc.orig_config['mesh_max'][0])
@@ -57,6 +59,10 @@ class PAM:
         if self.auto_reference_index == False:
             return reference_index
 
+        if self.z_endstop_x < 0 or self.z_endstop_y < 0:
+            self.gcode.respond_raw("Z-Endstop XY coordinates not configured!")
+            return reference_index
+
         if self._generate_points(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy) == False:
             return reference_index
 
@@ -65,7 +71,7 @@ class PAM:
         if probe is not None:
             x_offset, y_offset = probe.get_offsets()[:2]
 
-        probe_point = [90, 90]
+        probe_point = [self.z_endstop_x, self.z_endstop_y]
         reference_index_distance = 1000
         for i, coord in enumerate(self.points):
             distance = math.dist(probe_point, [coord[0] - x_offset, coord[1] - y_offset])
