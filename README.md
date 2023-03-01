@@ -1,12 +1,7 @@
-# PAM for RatOS
-Print Area Mesh for RatOS
+# PAM for RatOS / Klipper
+Print Area Mesh for RatOS and Klipper
 
-Adds dynamic mesh calibration to your RatOS printer and meshes only the area where your object is located.
-
-PAM doesnt support any RatOS Alpha or Beta Version!
-
-- works out of the box with any printer running RatOS
-- respects all RatOS probe and mesh settings
+Adds dynamic mesh calibration to your printer and meshes only the first layer area.
 
 # 1. Install
 SSH into your Raspberry PI and execute:
@@ -16,11 +11,17 @@ git clone https://github.com/HelgeKeck/pam.git
 bash ~/pam/install.sh
 ```
 
-# 2. Activate
-Add this to the overwrite section at the end of your printer.cfg file.
+# 2. PAM for RatOS
+
+Add this line to the override section, at the end of your printer.cfg file.
 ```ini
-# PAM
 [include pam/pam.cfg]
+```
+
+# 2. PAM for Klipper
+In your gcode call `PAM PROFILE=default` instead of `BED_MESH_CALIBRATE`.
+```ini
+[pam]
 ```
 
 # 3. Modify your slicers start print g-code
