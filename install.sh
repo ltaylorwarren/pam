@@ -14,19 +14,19 @@ SRCDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/ && pwd )"
 # Default Parameters
 MACRO_DIR=""MMACRO_FILE=""
 KLIPPY_EXTRAS_DIR="${HOME}/klipper/klippy/extras"
-RATOS_V1_CONFIG_DIR="${HOME}/klipper_config"
-RATOS_V2_CONFIG_DIR="${HOME}/printer_data/config"
+KLIPPER_CONFIG_DIR="${HOME}/klipper_config"
+PRINTER_DATA_CONFIG_DIR="${HOME}/printer_data/config"
 
 function get_ratos_version {
-    if [ -d "${RATOS_V1_CONFIG_DIR}" ]; then
-        echo -e "RatOS Version 1.x"
-        MACRO_FILE="pam.cfg"
-        CONFIG_DIR="${RATOS_V1_CONFIG_DIR}"
+    if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
+        echo -e "using klipper config dir..."
+        MACRO_FILE="ratos_v1.cfg"
+        CONFIG_DIR="${KLIPPER_CONFIG_DIR}"
     else
-        if [ -d "${RATOS_V2_CONFIG_DIR}" ]; then
-            echo -e "RatOS Version 2.x"
-            MACRO_FILE="pam_v2.cfg"
-            CONFIG_DIR="${RATOS_V2_CONFIG_DIR}"
+        if [ -d "${PRINTER_DATA_CONFIG_DIR}" ]; then
+            echo -e "using printer data config dir..."
+            MACRO_FILE="ratos_v2.cfg"
+            CONFIG_DIR="${PRINTER_DATA_CONFIG_DIR}"
         else
             echo -e "ERROR: No RatOS config folder found."
             exit 1
