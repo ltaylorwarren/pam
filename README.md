@@ -19,6 +19,8 @@ Add this line to the override section, at the end of your printer.cfg file.
 ```
 
 # 2. PAM for Klipper
+Ignore this if you are using RatOS!
+
 In your gcode call `PAM PROFILE=default` instead of `BED_MESH_CALIBRATE`.
 ```ini
 [pam]
