@@ -58,7 +58,7 @@ To make PAM work with Cura you need to install a post processing plugin
 
 # 4. Relative Reference Index
 This is optional, but if you want, PAM can calculate the relative reference index for you.  
-More infos here: https://www.klipper3d.org/Bed_Mesh.html?h=reference+inde#the-relative-reference-index
+More infos here: https://www.klipper3d.org/Bed_Mesh.html#the-relative-reference-index
 ```ini
 # PAM
 [pam]
