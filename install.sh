@@ -19,12 +19,12 @@ PRINTER_DATA_CONFIG_DIR="${HOME}/printer_data/config"
 
 function get_ratos_version {
     if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
-        echo -e "using klipper config dir..."
+        echo -e "installing into klipper config dir..."
         MACRO_FILE="ratos_v1.cfg"
         CONFIG_DIR="${KLIPPER_CONFIG_DIR}"
     else
         if [ -d "${PRINTER_DATA_CONFIG_DIR}" ]; then
-            echo -e "using printer data config dir..."
+            echo -e "installing into printer data config dir..."
             MACRO_FILE="ratos_v2.cfg"
             CONFIG_DIR="${PRINTER_DATA_CONFIG_DIR}"
         else
@@ -80,14 +80,13 @@ function link_extra {
 }
 
 echo -e ""
-echo -e "    ___  ___  __  __ "
-echo -e "   | _ \/   \|  \/  |"
-echo -e "   |  _/| - || |\/| |"
-echo -e "   |_|  |_|_||_|  |_|"
+echo -e "       ___  ___  __  __ "
+echo -e "      | _ \/   \|  \/  |"
+echo -e "      |  _/| - || |\/| |"
+echo -e "      |_|  |_|_||_|  |_|"
 echo -e ""
-echo -e "Print Area Mesh for RatOS"
+echo -e "Print Area Mesh for Klipper v0.3.3"
 echo -e ""
-echo -e "PAM Version 0.3.3"
 get_ratos_version
 stop_klipper
 create_macro_dir
