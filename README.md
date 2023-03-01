@@ -61,7 +61,7 @@ This is optional, but if you want, PAM can calculate the relative reference inde
 ```ini
 # PAM
 [pam]
-auto_reference_index: True      # Activate the auto reference calculation
+auto_reference_index: True      # Activate the auto reference index calculation
                                 # default = False
 z_endstop_x: 90                 # set this value only in case you dont home z in the middle of the build plate 
                                 # default = -1, PAM will use the RatOS values, vanilla klipper the middle of the build plate
