@@ -85,7 +85,7 @@ echo -e "   |_|  |_|_||_|  |_|"
 echo -e ""
 echo -e "Print Area Mesh for RatOS"
 echo -e ""
-echo -e "PAM Version 0.3.0"
+echo -e "PAM Version 0.3.1"
 get_ratos_version
 stop_klipper
 create_macro_dir
