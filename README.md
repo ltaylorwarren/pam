@@ -1,5 +1,4 @@
-# PAM for RatOS and Klipper
-Print Area Mesh
+# PAM - Print Area Mesh for RatOS and Klipper
 
 Adds dynamic mesh calibration to your printer and meshes only the first layer area.
 
