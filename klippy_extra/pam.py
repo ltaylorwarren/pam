@@ -36,7 +36,7 @@ class PAM:
             self.gcode.respond_raw("Wrong first layer coordinates!")
 
     def cmd_PAM(self, param):
-        mesh_profile = param.get('PROFILE')
+        mesh_profile = param.get('PROFILE', 'default')
         if self.x0 >= self.x1 or self.y0 >= self.y1:
             self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0}'.format(mesh_profile))
             return
