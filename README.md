@@ -2,6 +2,9 @@
 
 Adds dynamic mesh calibration to your printer and meshes only the first layer area.
 
+# NEW! Please update your PAM moonraker entry!
+Please copy and paste the new Moonraker entry from https://github.com/HelgeKeck/pam#5-update into your moonraker.conf file.
+
 # 1. Install
 SSH into your Raspberry PI and execute:
 ```
