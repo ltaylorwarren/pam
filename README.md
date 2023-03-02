@@ -25,25 +25,25 @@ If you use ***Klipper***, add this line to your printer.cfg and call `PAM` inste
 
 # 3. Modify your slicers start print g-code
 
-- PrusaSlicer / SuperSlicer
+**PrusaSlicer / SuperSlicer**
 ```ini
 MESH_CONFIG X0={first_layer_print_min[0]} Y0={first_layer_print_min[1]} X1={first_layer_print_max[0]} Y1={first_layer_print_max[1]}
 START_PRINT EXTRUDER_TEMP=[first_layer_temperature] BED_TEMP=[first_layer_bed_temperature]
 ```
 
-- Ideamaker 
+**Ideamaker** 
 ```ini
 MESH_CONFIG X0={print_pos_min_x} Y0={print_pos_min_y} X1={print_pos_max_x} Y1={print_pos_max_y}
 START_PRINT EXTRUDER_TEMP={temperature_extruder1} BED_TEMP={temperature_heatbed}
 ```
 
-- Simplify 3D V5
+**Simplify 3D V5**
 ```ini
 MESH_CONFIG X0=[build_min_x] Y0=[build_min_y] X1=[build_max_x] Y1=[build_max_y]
 START_PRINT EXTRUDER_TEMP=[extruder0_temperature] BED_TEMP=[bed0_temperature]
 ```
 
-- Cura
+**Cura**
 ```ini
 MESH_CONFIG X0=%MINX% Y0=%MINY% X1=%MAXX% Y1=%MAXY%
 START_PRINT EXTRUDER_TEMP={material_print_temperature_layer_0} BED_TEMP={material_bed_temperature_layer_0}
