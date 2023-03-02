@@ -104,7 +104,6 @@ class PAM:
                 reference_index_distance = distance
                 reference_index = i
 
-        # und tschüss..
         return reference_index
     
     def generate_points(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
