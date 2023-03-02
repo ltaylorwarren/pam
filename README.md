@@ -63,7 +63,6 @@ To make PAM work with Cura you need to install a post processing plugin
 This is optional. PAM can calculate the relative reference index for you.  
 More infos here: https://www.klipper3d.org/Bed_Mesh.html#the-relative-reference-index
 ```ini
-# PAM
 [pam]
 auto_reference_index: True      # Activate the auto reference index calculation
                                 # default = False
@@ -76,7 +75,6 @@ z_endstop_y: 90                 # set this value only in case you dont home z in
 # 5. Moonraker Update Manager
 If you want to receive updates for PAM, add this at the end of the moonraker.conf file.
 ```ini
-# PAM
 [update_manager pam]
 type: git_repo
 primary_branch: main
