@@ -73,7 +73,7 @@ z_endstop_y: 90                 # set this value only in case you dont home z in
                                 # default = -1, PAM will use the RatOS values, vanilla klipper the middle of the build plate
 ```
 
-# 5. Update
+# 5. Moonraker Update
 If you want to receive updates for PAM, add this at the end of the moonraker.conf file.
 ```ini
 # PAM
