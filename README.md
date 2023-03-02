@@ -80,5 +80,6 @@ primary_branch: main
 path: ~/pam
 origin: https://github.com/HelgeKeck/pam.git
 is_system_service: False
+managed_services: klipper
 install_script: install.sh
 ```
