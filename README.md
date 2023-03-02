@@ -17,7 +17,7 @@ If you use ***RatOS***, add this line to your printer.cfg.
 [include pam/ratos.cfg]
 ```
 
-If you use ***Klipper***, add this line to your printer.cfg and call `PAM PROFILE=default` instead of `BED_MESH_CALIBRATE`.
+If you use ***Klipper***, add this line to your printer.cfg and call `PAM` instead of `BED_MESH_CALIBRATE`.
 
 ```ini
 [include pam/klipper.cfg]
