@@ -1,5 +1,15 @@
 import math, ast
 
+# PEP 485 isclose()
+def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
+    return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+
+# return true if a coordinate is within the region
+# specified by min_c and max_c
+def within(coord, min_c, max_c, tol=0.0):
+    return (max_c[0] + tol) >= coord[0] >= (min_c[0] - tol) and \
+        (max_c[1] + tol) >= coord[1] >= (min_c[1] - tol)
+
 class PAM:
     
     def __init__(self, config):
@@ -267,16 +277,6 @@ class PAM:
                 return False
             self.substituted_indices[i] = valid_coords
         return True
-
-# PEP 485 isclose()
-def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
-    return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
-
-# return true if a coordinate is within the region
-# specified by min_c and max_c
-def within(coord, min_c, max_c, tol=0.0):
-    return (max_c[0] + tol) >= coord[0] >= (min_c[0] - tol) and \
-        (max_c[1] + tol) >= coord[1] >= (min_c[1] - tol)
 
 def load_config(config):
     return PAM(config)
