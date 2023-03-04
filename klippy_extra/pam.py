@@ -151,7 +151,7 @@ class PAM:
         # by default the reference index is deactivated
         reference_index = -1
 
-        if self.auto_reference_index == True:
+        if self.auto_reference_index == False:
             return reference_index
     
         # get ratos z-endstop xy coordinates
