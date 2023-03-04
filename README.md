@@ -81,7 +81,7 @@ More infos here: https://www.klipper3d.org/Bed_Mesh.html#the-relative-reference-
 ```ini
 [pam]
 auto_reference_index: True      # Activate the auto reference index calculation
-                                # default = False
+                                # default = False, no index will be used
 
 # set these values only in case you dont home z in the middle of the build plate 
 z_endstop_x: 90                 # Nozzle X-Coordinate, Klipper offsets will be respected 
