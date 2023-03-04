@@ -83,7 +83,7 @@ More infos here: https://www.klipper3d.org/Bed_Mesh.html#the-relative-reference-
 auto_reference_index: True      # Activate the auto reference index calculation
                                 # default = False
 
-# set this value only in case you dont home z in the middle of the build plate 
+# set this values only in case you dont home z in the middle of the build plate 
 z_endstop_x: 90                 # Nozzle X-Coordinate, Klipper offsets will be respected 
                                 # default = -1, RatOS uses its settings, klipper the middle of the build plate
 z_endstop_y: 90                 # Nozzle Y-Coordinate, Klipper offsets will be respected
