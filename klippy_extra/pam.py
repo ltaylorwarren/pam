@@ -65,6 +65,10 @@ class PAM:
         self.gcode.respond_raw("PAM v0.4.0 bed mesh leveling...")
         self.gcode.respond_raw('Relative Reference Index {0}'.format(str(reference_index)))
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index={7}'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy, reference_index))
+        self.x0 = -1
+        self.y0 = -1
+        self.x1 = -1
+        self.y1 = -1
 
     def set_priming_location(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1):
         ratos_gcode = self.printer.lookup_object('gcode_macro RatOS')
