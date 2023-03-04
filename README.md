@@ -1,6 +1,9 @@
 # PAM - Print Area Mesh for RatOS and Klipper
 
-Adds dynamic mesh calibration to your printer and meshes only the first layer area.
+- adds dynamic mesh calibration to your printer and meshes only the first layer area.
+- can calculate the relative reference index for you and respects faulty regions if configured.
+- supports adaptive priming for RatOS v2.x
+- works with RatOS and Klipper
 
 # Please update your PAM moonraker entry!
 In case you have PAM already installed, please copy and paste the new Moonraker entry from https://github.com/HelgeKeck/pam#6-moonraker-update-manager into your moonraker.conf file.
