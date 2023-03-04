@@ -12,7 +12,7 @@ set -e
 SRCDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/ && pwd )"
 
 # Default Parameters
-MACRO_DIR=""MACRO_FILE=""
+MACRO_DIR=""
 KLIPPY_EXTRAS_DIR="${HOME}/klipper/klippy/extras"
 KLIPPER_CONFIG_DIR="${HOME}/klipper_config"
 PRINTER_DATA_CONFIG_DIR="${HOME}/printer_data/config"
