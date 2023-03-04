@@ -54,6 +54,87 @@ class PAM:
         self.gcode.respond_raw('Relative Reference Index {0}'.format(str(reference_index)))
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index={7}'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy, reference_index))
 
+    def set_priming_location(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1):
+        ratos_gcode = self.printer.lookup_object('gcode_macro RatOS')
+
+        mesh_x0 = mesh_x0
+        mesh_y0 = mesh_y0
+        mesh_x1 = mesh_x1
+        mesh_y1 = mesh_y1
+
+        toolhead_min_x = max(0, self.toolhead.kin.axes_min.x)
+        toolhead_min_y = max(0, self.toolhead.kin.axes_min.y)
+        toolhead_max_x = self.toolhead.kin.axes_max.x
+        toolhead_max_y = self.toolhead.kin.axes_max.y
+
+        prime_width = 15
+        prime_length = 100
+
+        nozzle_priming = str(ratos_gcode.variables['nozzle_priming']).lower() 
+        if nozzle_priming == 'primeline':
+            prime_width = 2
+            self.toolhead_offset_left = 2
+            self.toolhead_offset_right = 2
+            self.toolhead_offset_front = 2
+            self.toolhead_offset_back = 2
+
+        prime_x = mesh_x0 + ((mesh_x1 - mesh_x0) / 2)
+        prime_y = mesh_y0 + ((mesh_y1 - mesh_y0) / 2)
+        if toolhead_max_x - mesh_x1 - self.toolhead_offset_right > prime_width:
+            # right
+            location = 'right'
+            prime_x = mesh_x1 + self.toolhead_offset_right + (prime_width / 2)
+            if prime_y + prime_length > toolhead_max_y:
+                prime_y = toolhead_max_y - prime_length
+            if prime_y < toolhead_max_y / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'backwards'
+        elif mesh_x0 - toolhead_min_x - self.toolhead_offset_left > prime_width:
+            # left
+            location = 'left'
+            prime_x = mesh_x0 - self.toolhead_offset_left - (prime_width / 2)
+            if prime_y + prime_length > toolhead_max_y:
+                prime_y = toolhead_max_y - prime_length
+            if prime_y < toolhead_max_y / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'backwards'
+        elif mesh_y0 - toolhead_min_y - self.toolhead_offset_front > prime_width:
+            # front
+            location = 'front'
+            prime_y = mesh_y0 - self.toolhead_offset_front - (prime_width / 2)
+            if prime_x + prime_length > toolhead_max_x:
+                prime_x = toolhead_max_x - prime_length
+            if prime_x > toolhead_max_x / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
+                if prime_x < toolhead_max_x / 2:
+                    prime_x = toolhead_min_y + prime_length + (prime_width / 2)
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'right'
+                if prime_x > toolhead_max_x - prime_length - (prime_width / 2):
+                    prime_x = toolhead_max_x - prime_length - (prime_width / 2)
+        elif toolhead_max_y - mesh_y1 - self.toolhead_offset_back > prime_width:
+            # back
+            location = 'back'
+            prime_y = mesh_y1 + self.toolhead_offset_back + (prime_width / 2)
+            if prime_x + prime_length > toolhead_max_x:
+                prime_x = toolhead_max_x - prime_length
+            if prime_x > toolhead_max_x / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
+                if prime_x < toolhead_max_x / 2:
+                    prime_x = toolhead_min_y + prime_length + (prime_width / 2)
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'right'
+                if prime_x > toolhead_max_x - prime_length - (prime_width / 2):
+                    prime_x = toolhead_max_x - prime_length - (prime_width / 2)
+
+        ratos_gcode.variables['nozzle_prime_start_x'] = prime_x
+        ratos_gcode.variables['nozzle_prime_start_y'] = prime_y
+        ratos_gcode.variables['nozzle_prime_location'] = location
+        ratos_gcode.variables['nozzle_prime_direction'] = prime_dir
+        ratos_gcode.variables['safe_pos_after_prime'] = self.safe_pos_after_prime
+
     def get_reference_index(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
         # by default the reference index is deactivated
         reference_index = -1
