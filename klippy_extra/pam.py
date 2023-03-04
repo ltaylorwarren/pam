@@ -1,5 +1,15 @@
 import math, ast
 
+# PEP 485 isclose()
+def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
+    return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+
+# return true if a coordinate is within the region
+# specified by min_c and max_c
+def within(coord, min_c, max_c, tol=0.0):
+    return (max_c[0] + tol) >= coord[0] >= (min_c[0] - tol) and \
+        (max_c[1] + tol) >= coord[1] >= (min_c[1] - tol)
+
 class PAM:
     
     def __init__(self, config):
@@ -12,12 +22,12 @@ class PAM:
         self.offset = self.config.getfloat('offset', 0.0)
         self.z_endstop_x = self.config.getint('z_endstop_x', -1)
         self.z_endstop_y = self.config.getint('z_endstop_y', -1)
+        self.optimus_prime = self.config.getboolean('optimus_prime', False)
         self.auto_reference_index = self.config.getboolean('auto_reference_index', False)
-        self.toolhead_offset_left = self.config.getfloat('toolhead_offset_left', 35.0)
-        self.toolhead_offset_right = self.config.getfloat('toolhead_offset_right', 30.0)
-        self.toolhead_offset_front = self.config.getfloat('toolhead_offset_front', 15.0)
-        self.toolhead_offset_back = self.config.getfloat('toolhead_offset_back', 15.0)
-        self.safe_pos_after_prime = self.config.getboolean('safe_pos_after_prime', False)
+        self.toolhead_offset_left = self.config.getfloat('toolhead_offset_left', 35.0)      # EVA 3.1 Default with 8mm Probe 
+        self.toolhead_offset_right = self.config.getfloat('toolhead_offset_right', 30.0)    # EVA 3.1 Default with 8mm Probe
+        self.toolhead_offset_front = self.config.getfloat('toolhead_offset_front', 15.0)    # EVA 3.1 Default with 8mm Probe
+        self.toolhead_offset_back = self.config.getfloat('toolhead_offset_back', 15.0)      # EVA 3.1 Default with 8mm Probe
         self.gcode.register_command('PAM', self.cmd_PAM, desc=("PAM"))
         self.gcode.register_command('MESH_CONFIG', self.cmd_MESH_CONFIG, desc=("MESH_CONFIG"))
         self.printer.register_event_handler("klippy:connect", self.handle_connect)
@@ -49,18 +59,98 @@ class PAM:
         if self.bed_mesh.bmc.orig_config['algo'] == 'lagrange' or (self.bed_mesh.bmc.orig_config['algo'] == 'bicubic' and (mesh_cx < 4 or mesh_cy < 4)):
             mesh_cx = min(6, mesh_cx)
             mesh_cy = min(6, mesh_cy)
-        reference_index = self.get_reference_index(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy)
-        self.gcode.respond_raw("PAM v0.3.3 bed mesh leveling...")
+        if self.auto_reference_index == True:
+            reference_index = self.get_reference_index(mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy)
+        if self.optimus_prime == True:
+            self.set_priming_location(mesh_x0, mesh_y0, mesh_x1, mesh_y1)
+        self.gcode.respond_raw("PAM v0.4.0 bed mesh leveling...")
         self.gcode.respond_raw('Relative Reference Index {0}'.format(str(reference_index)))
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index={7}'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy, reference_index))
+
+    def set_priming_location(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1):
+        ratos_gcode = self.printer.lookup_object('gcode_macro RatOS')
+
+        mesh_x0 = mesh_x0
+        mesh_y0 = mesh_y0
+        mesh_x1 = mesh_x1
+        mesh_y1 = mesh_y1
+
+        toolhead_min_x = max(0, self.toolhead.kin.axes_min.x)
+        toolhead_min_y = max(0, self.toolhead.kin.axes_min.y)
+        toolhead_max_x = self.toolhead.kin.axes_max.x
+        toolhead_max_y = self.toolhead.kin.axes_max.y
+
+        prime_width = 15
+        prime_length = 100
+
+        nozzle_priming = str(ratos_gcode.variables['nozzle_priming']).lower() 
+        if nozzle_priming == 'primeline':
+            prime_width = 2
+            self.toolhead_offset_left = 2
+            self.toolhead_offset_right = 2
+            self.toolhead_offset_front = 2
+            self.toolhead_offset_back = 2
+
+        prime_x = mesh_x0 + ((mesh_x1 - mesh_x0) / 2)
+        prime_y = mesh_y0 + ((mesh_y1 - mesh_y0) / 2)
+
+        if mesh_y0 - toolhead_min_y - self.toolhead_offset_front > prime_width:
+            # front
+            location = 'front'
+            prime_y = mesh_y0 - self.toolhead_offset_front - (prime_width / 2)
+            if prime_x + prime_length > toolhead_max_x:
+                prime_x = toolhead_max_x - prime_length
+            if prime_x > toolhead_max_x / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
+                if prime_x < toolhead_max_x / 2:
+                    prime_x = toolhead_min_y + prime_length + (prime_width / 2)
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'right'
+                if prime_x > toolhead_max_x - prime_length - (prime_width / 2):
+                    prime_x = toolhead_max_x - prime_length - (prime_width / 2)
+        elif toolhead_max_y - mesh_y1 - self.toolhead_offset_back > prime_width:
+            # back
+            location = 'back'
+            prime_y = mesh_y1 + self.toolhead_offset_back + (prime_width / 2)
+            if prime_x + prime_length > toolhead_max_x:
+                prime_x = toolhead_max_x - prime_length
+            if prime_x > toolhead_max_x / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'left'
+                if prime_x < toolhead_max_x / 2:
+                    prime_x = toolhead_min_y + prime_length + (prime_width / 2)
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'right'
+                if prime_x > toolhead_max_x - prime_length - (prime_width / 2):
+                    prime_x = toolhead_max_x - prime_length - (prime_width / 2)
+        elif toolhead_max_x - mesh_x1 - self.toolhead_offset_right > prime_width:
+            # right
+            location = 'right'
+            prime_x = mesh_x1 + self.toolhead_offset_right + (prime_width / 2)
+            if prime_y + prime_length > toolhead_max_y:
+                prime_y = toolhead_max_y - prime_length
+            if prime_y < toolhead_max_y / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'backwards'
+        elif mesh_x0 - toolhead_min_x - self.toolhead_offset_left > prime_width:
+            # left
+            location = 'left'
+            prime_x = mesh_x0 - self.toolhead_offset_left - (prime_width / 2)
+            if prime_y + prime_length > toolhead_max_y:
+                prime_y = toolhead_max_y - prime_length
+            if prime_y < toolhead_max_y / 2:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'forwards'
+            else:
+                prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'backwards'
+
+        ratos_gcode.variables['nozzle_prime_start_x'] = prime_x
+        ratos_gcode.variables['nozzle_prime_start_y'] = prime_y
+        ratos_gcode.variables['nozzle_prime_location'] = location
+        ratos_gcode.variables['nozzle_prime_direction'] = prime_dir
 
     def get_reference_index(self, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy):
         # by default the reference index is deactivated
         reference_index = -1
-
-        # return default if feature is turned off
-        if self.auto_reference_index == False:
-            return reference_index
 
         # get ratos z-endstop xy coordinates
         if self.z_endstop_x < 0 or self.z_endstop_y < 0:
@@ -187,16 +277,6 @@ class PAM:
                 return False
             self.substituted_indices[i] = valid_coords
         return True
-
-# PEP 485 isclose()
-def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
-    return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
-
-# return true if a coordinate is within the region
-# specified by min_c and max_c
-def within(coord, min_c, max_c, tol=0.0):
-    return (max_c[0] + tol) >= coord[0] >= (min_c[0] - tol) and \
-        (max_c[1] + tol) >= coord[1] >= (min_c[1] - tol)
 
 def load_config(config):
     return PAM(config)
