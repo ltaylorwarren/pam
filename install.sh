@@ -80,12 +80,12 @@ function link_extra {
 }
 
 echo -e ""
-echo -e "       ___  ___  __  __ "
-echo -e "      | _ \/   \|  \/  |"
-echo -e "      |  _/| - || |\/| |"
-echo -e "      |_|  |_|_||_|  |_|"
+echo -e "    ___  ___  __  __ "
+echo -e "   | _ \/   \|  \/  |"
+echo -e "   |  _/| - || |\/| |"
+echo -e "   |_|  |_|_||_|  |_|"
 echo -e ""
-echo -e "Print Area Mesh for Klipper v0.3.3"
+echo -e "Print Area Mesh for Klipper"
 echo -e ""
 get_ratos_version
 stop_klipper
