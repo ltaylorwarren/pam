@@ -84,7 +84,15 @@ z_endstop_y: 90                 # set this value only in case you dont home z in
                                 # default = -1, PAM will use the RatOS values, vanilla klipper the middle of the build plate
 ```
 
-# 5. Moonraker Update Manager
+# 5. Adaptive Priming
+This is optional and works only for RatOS V2.x.
+```ini
+[pam]
+optimus_prime: True             # Activate the adaptive priming feature
+                                # default = False, RatOS settings will be used
+```
+
+# 6. Moonraker Update Manager
 If you want to receive updates for PAM, add this at the end of the moonraker.conf file.
 ```ini
 [update_manager pam]
