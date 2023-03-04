@@ -72,16 +72,18 @@ To make PAM work with Cura you need to install a post processing plugin
 4. in cura open menu ```Extensions -> Post processing -> Modify G-Code``` and select ```Mesh Print Size```
 
 # 4. Relative Reference Index
-This is optional. PAM can calculate the relative reference index for you.  
+This is optional. PAM can calculate the relative reference index for you and respects faulty regions if configured. 
 More infos here: https://www.klipper3d.org/Bed_Mesh.html#the-relative-reference-index
 ```ini
 [pam]
 auto_reference_index: True      # Activate the auto reference index calculation
                                 # default = False
-z_endstop_x: 90                 # set this value only in case you dont home z in the middle of the build plate 
-                                # default = -1, RatOS will use its defaults, klipper the middle of the build plate
-z_endstop_y: 90                 # set this value only in case you dont home z in the middle of the build plate
-                                # default = -1, RatOS will use its defaults, klipper the middle of the build plate
+
+# set this value only in case you dont home z in the middle of the build plate 
+z_endstop_x: 90                 # Nozzle X-Coordinate, Klipper offsets will be respected 
+                                # default = -1, RatOS uses its settings, klipper the middle of the build plate
+z_endstop_y: 90                 # Nozzle Y-Coordinate, Klipper offsets will be respected
+                                # default = -1, RatOS uses its settings, klipper the middle of the build plate
 ```
 
 # 5. Adaptive Priming
