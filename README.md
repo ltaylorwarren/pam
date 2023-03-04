@@ -79,9 +79,9 @@ More infos here: https://www.klipper3d.org/Bed_Mesh.html#the-relative-reference-
 auto_reference_index: True      # Activate the auto reference index calculation
                                 # default = False
 z_endstop_x: 90                 # set this value only in case you dont home z in the middle of the build plate 
-                                # default = -1, PAM will use the RatOS values, vanilla klipper the middle of the build plate
+                                # default = -1, RatOS will use its defaults, klipper the middle of the build plate
 z_endstop_y: 90                 # set this value only in case you dont home z in the middle of the build plate
-                                # default = -1, PAM will use the RatOS values, vanilla klipper the middle of the build plate
+                                # default = -1, RatOS will use its defaults, klipper the middle of the build plate
 ```
 
 # 5. Adaptive Priming
