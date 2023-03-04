@@ -3,7 +3,7 @@
 Adds dynamic mesh calibration to your printer and meshes only the first layer area.
 
 # Please update your PAM moonraker entry!
-In case you have PAM already installed, please copy and paste the new Moonraker entry from https://github.com/HelgeKeck/pam#5-moonraker-update-manager into your moonraker.conf file.
+In case you have PAM already installed, please copy and paste the new Moonraker entry from https://github.com/HelgeKeck/pam#6-moonraker-update-manager into your moonraker.conf file.
 
 # Update Issues
 If you have problems to update to the new version, please run:
