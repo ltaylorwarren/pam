@@ -98,7 +98,7 @@ optimus_prime: True             # Activate the adaptive priming feature
                                 # default = False, RatOS settings will be used
 
 # In case you have a non EVA 3.1 Toolhead, you can configure your toolhead offsets
-# These are the default values for a EVA 3.1 Toolhead  with a 8mm probe attached
+# These are the default values, for a EVA 3.1 Toolhead  with a 8mm probe attached
 toolhead_offset_left: 35
 toolhead_offset_right: 30
 toolhead_offset_front: 15
