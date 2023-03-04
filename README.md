@@ -91,7 +91,7 @@ z_endstop_y: 90                 # Nozzle Y-Coordinate, Klipper offsets will be r
 ```
 
 # 5. Adaptive Priming
-This is optional and works only for RatOS V2.x.
+This is optional and works only for RatOS V2.x. It moves the priming location closer to the meshed area.
 ```ini
 [pam]
 optimus_prime: True             # Activate the adaptive priming feature
