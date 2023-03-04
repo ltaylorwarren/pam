@@ -13,18 +13,17 @@ SRCDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/ && pwd )"
 
 # Default Parameters
 MACRO_DIR=""
-KLIPPY_EXTRAS_DIR="${HOME}/klipper/klippy/extras"
 KLIPPER_CONFIG_DIR="${HOME}/klipper_config"
 PRINTER_DATA_CONFIG_DIR="${HOME}/printer_data/config"
 
 function get_ratos_version {
     if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
-        echo -e "installing into klipper config dir..."
+        echo -e "Installing into klipper config dir."
         MACRO_FILE="ratos_v1.cfg"
         CONFIG_DIR="${KLIPPER_CONFIG_DIR}"
     else
         if [ -d "${PRINTER_DATA_CONFIG_DIR}" ]; then
-            echo -e "installing into printer data config dir..."
+            echo -e "Installing into printer data config dir."
             MACRO_FILE="ratos_v2.cfg"
             CONFIG_DIR="${PRINTER_DATA_CONFIG_DIR}"
         else
@@ -69,12 +68,21 @@ function link_macro {
     fi
 }
 
-function link_extra {
-    if [ -d "${KLIPPY_EXTRAS_DIR}" ]; then
-        rm -f "${KLIPPY_EXTRAS_DIR}/pam.py"
-        ln -sf "${SRCDIR}/klippy_extra/pam.py" "${KLIPPY_EXTRAS_DIR}/pam.py"
+function register_klippy_extension() {
+    EXT_NAME=$1
+    EXT_PATH=$2
+    EXT_FILE=$3
+    if [ ! -e $EXT_PATH/$EXT_FILE ]
+    then
+        echo "ERROR: The file you're trying to register does not exist"
+        exit 1
+    fi
+    curl --silent --fail -X POST 'http://localhost:3000/configure/api/trpc/klippy-extensions.register' -H 'content-type: application/json' --data-raw "{\"json\":{\"extensionName\":\"$EXT_NAME\",\"path\":\"$EXT_PATH\",\"fileName\":\"$EXT_FILE\"}}" > /dev/null
+    if [ $? -eq 0 ]
+    then
+        echo "Registered $EXT_NAME successfully."
     else
-        echo -e "ERROR: ${KLIPPY_EXTRAS_DIR} not found."
+        echo "ERROR: Failed to register $EXT_NAME. Is the RatOS configurator running?"
         exit 1
     fi
 }
@@ -91,7 +99,7 @@ get_ratos_version
 stop_klipper
 create_macro_dir
 link_macro
-link_extra
+register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
 start_klipper
 echo -e ""
 echo -e "Installation finished!"
