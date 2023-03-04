@@ -2,7 +2,7 @@
 
 - adds dynamic mesh calibration to your printer and meshes only the first layer area.
 - can calculate the relative reference index for you and respects faulty regions if configured.
-- adds adaptive priming for RatOS v2.x
+- adds adaptive priming to RatOS v2.x
 - works with RatOS and Klipper
 
 # Please update your PAM moonraker entry!
