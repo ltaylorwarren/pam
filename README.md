@@ -1,9 +1,8 @@
-# PAM - Print Area Mesh for RatOS and Klipper
+# PAM - Print Area Mesh for RatOS
 
 - adds dynamic mesh calibration to your printer and meshes only the first layer area.
 - can calculate the relative reference index for you and respects faulty regions if configured.
 - adds adaptive priming to RatOS v2.x
-- works with RatOS and Klipper
 
 # Please update your PAM moonraker entry!
 In case you have PAM already installed, please copy and paste the new Moonraker entry from https://github.com/HelgeKeck/pam#6-moonraker-update-manager into your moonraker.conf file.
@@ -24,15 +23,9 @@ bash ~/pam/install.sh
 
 # 2. Activate
 
-If you use ***RatOS***, add this line to your printer.cfg.
+Add this line to the end of your printer.cfg.
 ```ini
 [include pam/ratos.cfg]
-```
-
-If you use ***Klipper***, add this line to your printer.cfg and call `PAM` instead of `BED_MESH_CALIBRATE`.
-
-```ini
-[include pam/klipper.cfg]
 ```
 
 # 3. Modify your slicers start print g-code
@@ -84,10 +77,10 @@ auto_reference_index: True      # Activate the auto reference index calculation
                                 # default = False, no index will be used
 
 # set these values only in case you dont home z in the middle of the build plate 
-z_endstop_x: 90                 # Nozzle X-Coordinate, Klipper offsets will be respected 
-                                # default = -1, RatOS uses its settings, klipper the middle of the build plate
-z_endstop_y: 90                 # Nozzle Y-Coordinate, Klipper offsets will be respected
-                                # default = -1, RatOS uses its settings, klipper the middle of the build plate
+z_endstop_x: 90                 # Nozzle X-Coordinate, Probe offsets will be respected 
+                                # default = -1, RatOS uses its settings
+z_endstop_y: 90                 # Nozzle Y-Coordinate, Probe offsets will be respected
+                                # default = -1, RatOS uses its settings
 ```
 
 # 5. Adaptive Priming

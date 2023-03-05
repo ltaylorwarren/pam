@@ -64,8 +64,6 @@ function link_macro {
         ln -sf "${SRCDIR}/klipper_macro/${MACRO_FILE}" "${MACRO_DIR}/ratos.cfg"
         rm -f "${MACRO_DIR}/pam.cfg"
         ln -sf "${SRCDIR}/klipper_macro/pam.cfg" "${MACRO_DIR}/pam.cfg"
-        rm -f "${MACRO_DIR}/klipper.cfg"
-        ln -sf "${SRCDIR}/klipper_macro/klipper.cfg" "${MACRO_DIR}/klipper.cfg"
     else
         echo -e "ERROR: ${MACRO_DIR} not found."
         exit 1
