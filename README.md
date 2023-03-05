@@ -4,15 +4,6 @@
 - can calculate the relative reference index for you and respects faulty regions if configured.
 - adds adaptive priming to RatOS v2.x
 
-# Please update your PAM moonraker entry!
-In case you have PAM already installed, please copy and paste the new Moonraker entry from https://github.com/HelgeKeck/pam#6-moonraker-update-manager into your moonraker.conf file.
-
-# Update Issues
-If you have problems to update to the new version, please run:
-```
-bash ~/pam/install.sh
-```
-
 # 1. Install
 SSH into your Raspberry PI and execute:
 ```
