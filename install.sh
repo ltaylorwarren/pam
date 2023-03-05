@@ -70,6 +70,11 @@ function link_macro {
     fi
 }
 
+# works but needs folder structure changes
+function link_macro_folder {
+    ln -sf "${SRCDIR}/klipper_macro" "${MACRO_DIR}"
+}
+
 # this doesnt work for non ratos installations bc we dont know the port number
 function register_klippy_extension() {
     EXT_NAME=$1
@@ -112,6 +117,7 @@ stop_klipper
 get_ratos_version
 create_macro_dir
 link_macro
+#link_macro_folder
 link_klippy_extension
 #register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
 start_klipper

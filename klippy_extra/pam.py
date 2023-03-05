@@ -1,4 +1,4 @@
-import math, ast
+import math
 
 # PEP 485 isclose()
 def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
@@ -195,7 +195,7 @@ class PAM:
         # calculate reference index
         reference_index_distance = 9999
         for i, coord in enumerate(self.points):
-            distance = math.dist([self.z_endstop_x, self.z_endstop_y], [coord[0] - x_offset, coord[1] - y_offset])
+            distance = ((self.z_endstop_x - coord[0] - x_offset)**2 + (self.z_endstop_y - coord[1] - y_offset)**2)**0.5
             if distance < reference_index_distance:
                 reference_index_distance = distance
                 reference_index = i
