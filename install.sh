@@ -17,7 +17,7 @@ KLIPPER_CONFIG_DIR="${HOME}/klipper_config"
 PRINTER_DATA_CONFIG_DIR="${HOME}/printer_data/config"
 KLIPPY_EXTRAS="${HOME}/klipper/klippy/extras"
 
-function get_ratos_version {
+function get_macro_dir {
     if [ -d "${PRINTER_DATA_CONFIG_DIR}" ]; then
         echo -e "Installing into printer data config dir."
         MACRO_FILE="ratos_v2.cfg"
@@ -70,31 +70,6 @@ function link_macro {
     fi
 }
 
-# works but needs folder structure changes
-function link_macro_folder {
-    ln -sf "${SRCDIR}/klipper_macro" "${MACRO_DIR}"
-}
-
-# this doesnt work for non ratos installations bc we dont know the port number
-function register_klippy_extension() {
-    EXT_NAME=$1
-    EXT_PATH=$2
-    EXT_FILE=$3
-    if [ ! -e $EXT_PATH/$EXT_FILE ]
-    then
-        echo "ERROR: The file you're trying to register does not exist"
-        exit 1
-    fi
-    curl --silent --fail -X POST 'http://localhost:3000/configure/api/trpc/klippy-extensions.register' -H 'content-type: application/json' --data-raw "{\"json\":{\"extensionName\":\"$EXT_NAME\",\"path\":\"$EXT_PATH\",\"fileName\":\"$EXT_FILE\"}}" > /dev/null
-    if [ $? -eq 0 ]
-    then
-        echo "Registered $EXT_NAME successfully."
-    else
-        echo "ERROR: Failed to register $EXT_NAME. Is the RatOS configurator running?"
-        exit 1
-    fi
-}
-
 function link_klippy_extension {
     if [ -d "${KLIPPY_EXTRAS}" ]; then
         rm -f "${KLIPPY_EXTRAS}/pam.py"
@@ -114,12 +89,10 @@ echo -e ""
 echo -e "Print Area Mesh for Klipper"
 echo -e ""
 stop_klipper
-get_ratos_version
+get_macro_dir
 create_macro_dir
 link_macro
-#link_macro_folder
 link_klippy_extension
-#register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
 start_klipper
 echo -e ""
 echo -e "Installation finished!"
