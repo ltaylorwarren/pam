@@ -15,12 +15,15 @@ SRCDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/ && pwd )"
 MACRO_DIR=""
 KLIPPER_CONFIG_DIR="${HOME}/klipper_config"
 PRINTER_DATA_CONFIG_DIR="${HOME}/printer_data/config"
+KLIPPY_EXTRAS="${HOME}/klipper/klippy/extras"
 
 function get_ratos_version {
     if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
         echo -e "Installing into klipper config dir."
         MACRO_FILE="ratos_v1.cfg"
         CONFIG_DIR="${KLIPPER_CONFIG_DIR}"
+        MACRO_DIR="${CONFIG_DIR}/pam"
+        link_klippy_extension
     else
         if [ -d "${PRINTER_DATA_CONFIG_DIR}" ]; then
             echo -e "Installing into printer data config dir."
@@ -30,8 +33,9 @@ function get_ratos_version {
             echo -e "ERROR: No RatOS config folder found."
             exit 1
         fi
+        MACRO_DIR="${CONFIG_DIR}/pam"
+        register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
     fi
-    MACRO_DIR="${CONFIG_DIR}/pam"
 }
 
 function start_klipper {
@@ -87,6 +91,16 @@ function register_klippy_extension() {
     fi
 }
 
+function link_klippy_extension {
+    if [ -d "${KLIPPY_EXTRAS}" ]; then
+        rm -f "${KLIPPY_EXTRAS}/pam.py"
+        ln -sf "${SRCDIR}/klippy_extra/pam.py" "${KLIPPY_EXTRAS}/pam.py"
+    else
+        echo -e "ERROR: ${KLIPPY_EXTRAS} not found."
+        exit 1
+    fi
+}
+
 echo -e ""
 echo -e "    ___  ___  __  __ "
 echo -e "   | _ \/   \|  \/  |"
@@ -95,11 +109,10 @@ echo -e "   |_|  |_|_||_|  |_|"
 echo -e ""
 echo -e "Print Area Mesh for Klipper"
 echo -e ""
-get_ratos_version
 stop_klipper
+get_ratos_version
 create_macro_dir
 link_macro
-register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
 start_klipper
 echo -e ""
 echo -e "Installation finished!"
