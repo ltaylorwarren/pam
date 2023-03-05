@@ -84,9 +84,9 @@ auto_reference_index: True      # Activate the auto reference index calculation
 
 # set these values only in case you dont home z in the middle of the build plate 
 z_endstop_x: 90                 # Nozzle X-Coordinate, Probe offsets will be respected 
-                                # default = -1, RatOS uses its settings
+                                # default = -1, RatOS uses its settings, Klipper the center of the build plate
 z_endstop_y: 90                 # Nozzle Y-Coordinate, Probe offsets will be respected
-                                # default = -1, RatOS uses its settings
+                                # default = -1, RatOS uses its settings, Klipper the center of the build plate
 ```
 
 # 5. Adaptive Priming
