@@ -64,6 +64,7 @@ class PAM:
             self.set_priming_location(mesh_x0, mesh_y0, mesh_x1, mesh_y1)
         self.gcode.respond_raw("PAM v0.4.0 bed mesh leveling...")
         self.gcode.respond_raw('Relative Reference Index {0}'.format(str(reference_index)))
+        self.gcode.respond_raw("Mesh X0={0} Y0={1} X1={2} Y1={3}".format(str(mesh_x0), str(mesh_y0), str(mesh_x1), str(mesh_y1), ))
         self.gcode.run_script_from_command('BED_MESH_CALIBRATE PROFILE={0} mesh_min={1},{2} mesh_max={3},{4} probe_count={5},{6} relative_reference_index={7}'.format(mesh_profile, mesh_x0, mesh_y0, mesh_x1, mesh_y1, mesh_cx, mesh_cy, reference_index))
         self.x0 = -1
         self.y0 = -1
@@ -74,10 +75,10 @@ class PAM:
         ratos_gcode = self.printer.lookup_object('gcode_macro RatOS')
         prime_gcode = self.printer.lookup_object('gcode_macro PRIME')
 
-        mesh_x0 = mesh_x0
-        mesh_y0 = mesh_y0
-        mesh_x1 = mesh_x1
-        mesh_y1 = mesh_y1
+        mesh_x0 = self.x0
+        mesh_y0 = self.y0
+        mesh_x1 = self.x1
+        mesh_y1 = self.y1
 
         toolhead_min_x = max(0, self.toolhead.kin.axes_min.x)
         toolhead_min_y = max(0, self.toolhead.kin.axes_min.y)
@@ -138,10 +139,9 @@ class PAM:
                 prime_dir = ratos_gcode.variables['nozzle_prime_direction'] = 'backwards'
                 prime_y = mesh_y1
 
-        self.gcode.respond_raw("nozzle_prime_start_x {0}".format(str(prime_x)))
-        self.gcode.respond_raw("nozzle_prime_start_y {0}".format(str(prime_y)))
-        self.gcode.respond_raw("nozzle_prime_location {0}".format(str(location)))
-        self.gcode.respond_raw("nozzle_prime_direction {0}".format(str(prime_dir)))
+        self.gcode.respond_raw("Optimus Prime X={0} Y={1}".format(str(prime_x), str(prime_y)))
+        self.gcode.respond_raw("Optimus Prime Location {0}".format(str(location)))
+        self.gcode.respond_raw("Optimus Prime Direction {0}".format(str(prime_dir)))
 
         prime_gcode.variables['toolhead_offset_left'] = self.toolhead_offset_left
         prime_gcode.variables['toolhead_offset_right'] = self.toolhead_offset_right
