@@ -18,23 +18,23 @@ PRINTER_DATA_CONFIG_DIR="${HOME}/printer_data/config"
 KLIPPY_EXTRAS="${HOME}/klipper/klippy/extras"
 
 function get_ratos_version {
-    if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
-        echo -e "Installing into klipper config dir."
-        MACRO_FILE="ratos_v1.cfg"
-        CONFIG_DIR="${KLIPPER_CONFIG_DIR}"
+    if [ -d "${PRINTER_DATA_CONFIG_DIR}" ]; then
+        echo -e "Installing into printer data config dir."
+        MACRO_FILE="ratos_v2.cfg"
+        CONFIG_DIR="${PRINTER_DATA_CONFIG_DIR}"
         MACRO_DIR="${CONFIG_DIR}/pam"
-        link_klippy_extension
+        register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
     else
-        if [ -d "${PRINTER_DATA_CONFIG_DIR}" ]; then
-            echo -e "Installing into printer data config dir."
-            MACRO_FILE="ratos_v2.cfg"
-            CONFIG_DIR="${PRINTER_DATA_CONFIG_DIR}"
+        if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
+            echo -e "Installing into klipper config dir."
+            MACRO_FILE="ratos_v1.cfg"
+            CONFIG_DIR="${KLIPPER_CONFIG_DIR}"
         else
             echo -e "ERROR: No RatOS config folder found."
             exit 1
         fi
         MACRO_DIR="${CONFIG_DIR}/pam"
-        register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
+        link_klippy_extension
     fi
 }
 
