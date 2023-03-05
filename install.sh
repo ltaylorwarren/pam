@@ -23,7 +23,8 @@ function get_ratos_version {
         MACRO_FILE="ratos_v2.cfg"
         CONFIG_DIR="${PRINTER_DATA_CONFIG_DIR}"
         MACRO_DIR="${CONFIG_DIR}/pam"
-        register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
+        link_klippy_extension
+        #register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
     else
         if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
             echo -e "Installing into klipper config dir."
