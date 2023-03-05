@@ -23,10 +23,16 @@ bash ~/pam/install.sh
 
 # 2. Activate
 
-Add this line to the end of your printer.cfg.
+Add this line to the end of your printer.cfg if you use RatOS.
 ```ini
 [include pam/ratos.cfg]
 ```
+
+Add this line to the end of your printer.cfg if you use Klipper. Call `PAM` instead of `BED_MESH_CALIBRATE`
+```ini
+[include pam/klipper.cfg]
+```
+
 
 # 3. Modify your slicers start print g-code
 

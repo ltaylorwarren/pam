@@ -23,8 +23,6 @@ function get_ratos_version {
         MACRO_FILE="ratos_v2.cfg"
         CONFIG_DIR="${PRINTER_DATA_CONFIG_DIR}"
         MACRO_DIR="${CONFIG_DIR}/pam"
-        link_klippy_extension
-        #register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
     else
         if [ -d "${KLIPPER_CONFIG_DIR}" ]; then
             echo -e "Installing into klipper config dir."
@@ -35,7 +33,6 @@ function get_ratos_version {
             exit 1
         fi
         MACRO_DIR="${CONFIG_DIR}/pam"
-        link_klippy_extension
     fi
 }
 
@@ -65,12 +62,15 @@ function link_macro {
         ln -sf "${SRCDIR}/klipper_macro/${MACRO_FILE}" "${MACRO_DIR}/ratos.cfg"
         rm -f "${MACRO_DIR}/pam.cfg"
         ln -sf "${SRCDIR}/klipper_macro/pam.cfg" "${MACRO_DIR}/pam.cfg"
+        rm -f "${MACRO_DIR}/klipper.cfg"
+        ln -sf "${SRCDIR}/klipper_macro/klipper.cfg" "${MACRO_DIR}/klipper.cfg"
     else
         echo -e "ERROR: ${MACRO_DIR} not found."
         exit 1
     fi
 }
 
+# this doesnt work for non ratos installations bc we dont know the port number
 function register_klippy_extension() {
     EXT_NAME=$1
     EXT_PATH=$2
@@ -112,6 +112,8 @@ stop_klipper
 get_ratos_version
 create_macro_dir
 link_macro
+link_klippy_extension
+#register_klippy_extension "pam" "${SRCDIR}/klippy_extra" "pam.py"
 start_klipper
 echo -e ""
 echo -e "Installation finished!"
